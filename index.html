@@ -9,6 +9,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+    <!-- Scripts from Leaflet-->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
     <title>History of Helsinki buildings</title>
     <style>
@@ -45,79 +49,6 @@
   left:0; 
   }
 
-#googft-legend {
-  background-color: #fff;
-  border: 1px solid #000;
-  font-family: Arial,sans-serif;
-  font-size: 12px;
-  margin: 5px;
-  padding: 10px 10px 8px;
-}
-
-#googft-legend p {
-  font-weight: bold;
-  margin-top: 0;
-}
-
-#googft-legend div {
-  margin-bottom: 5px;
-}
-
-.googft-legend-swatch {
-  border: 1px solid;
-  float: left;
-  height: 12px;
-  margin-right: 8px;
-  width: 20px;
-}
-
-.googft-legend-range {
-  margin-left: 0;
-}
-
-.googft-dot-icon {
-  margin-right: 8px;
-}
-
-.googft-paddle-icon {
-  height: 24px;
-  left: -8px;
-  margin-right: -8px;
-  position: relative;
-  vertical-align: middle;
-  width: 24px;
-}
-
-.googft-legend-source {
-  margin-bottom: 0;
-  margin-top: 8px;
-}
-
-.googft-legend-source a {
-  color: #666;
-  font-size: 11px;
-}
-
-
-
-
-
-
-  .btn {
-    margin:3px;
-  } 
-
-    .btn-round { 
-    font-weight: bold;
-    width: 19px;
-    height: 19px;
-    text-align: center;
-    padding: 1px 0;
-    font-size: 13px;
-    line-height: 0.1;
-    border-radius: 30px;
-  }
-
   .sidebar {
   position:absolute;
   top:50px; right:0; width:250px;
@@ -139,14 +70,7 @@
 }
     </style>
   </head>
-
-    <!-- google scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-   
-
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&amp;libraries=visualization&amp;sensor=false"></script>
-
-
+  
 
     <!-- Function scripts -->  
     <script src="nouislider.min.js"></script>
@@ -182,131 +106,9 @@
 
   function initialize() {
 
-    google.maps.visualRefresh = true;
+var map = L.map('map').setView([51.505, -0.09], 13);
 
-    var isMobile = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ||
-      (navigator.userAgent.match(/(iPod|iPhone|iPad|BlackBerry|Windows Phone|iemobile)/));
-
-    if (isMobile) {
-      var viewport = document.querySelector("meta[name=viewport]");
-      viewport.setAttribute('content', 'initial-scale=1.0, user-scalable=no');
-    }
-
-    var mapDiv = document.getElementById('googft-mapCanvas');
-    mapDiv.style.width = isMobile ? '100%' : '100%';
-    mapDiv.style.height = isMobile ? '100%' : '100%';
-    var map = new google.maps.Map(mapDiv, {
-      center: new google.maps.LatLng(60.18199466214881, 24.9424015570944),
-      zoom: 13,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('googft-legend-open'));
-    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('googft-legend'));
-
-    var t = slider.noUiSlider.get();
-    
-    layer = new google.maps.FusionTablesLayer({
-      map: map,
-      heatmap: { enabled: false },
-      query: {
-        select: "col21",
-        from: "1Cjp5kwTFW1zb7rCRILUg6PryPwo_9RkkM4kD960",
-        where: "Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1]
-      },
-      options: {
-        styleId: 1, //if u put "2" here, then buildings will be coloured by type
-        templateId: 2
-      }
-    });
-    //console.log(layer);
-    if (isMobile) {
-      var legend = document.getElementById('googft-legend');
-      var legendOpenButton = document.getElementById('googft-legend-open');
-      var legendCloseButton = document.getElementById('googft-legend-close');
-      legend.style.display = 'none';
-      legendOpenButton.style.display = 'block';
-      legendCloseButton.style.display = 'block';
-      legendOpenButton.onclick = function() {
-        legend.style.display = 'block';
-        legendOpenButton.style.display = 'none';
-      }
-      legendCloseButton.onclick = function() {
-        legend.style.display = 'none';
-        legendOpenButton.style.display = 'block';
-      }
-    }
-  }
-
-  google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-    
-
-<!-- Hiding the side panel -->
-    <script>
-      function toggleControlPanel(){
-        var sidebar = document.getElementById("sidebar");
-        if (sidebar.style.display == "none") {
-          sidebar.style.display = "block";
-        }
-        else {
-          sidebar.style.display = "none";
-        }
-      }
-    </script>
-
-
-
-<body>
-  <div id="googft-mapCanvas"></div>
-  <input id="googft-legend-open" style="display:none" type="button" value="Legend"></input>
-  <div id="googft-legend">
-    <p id="googft-legend-title">Building year</p>
-    <div>
-      <span class="googft-legend-swatch" 
-style="background-color: #ff0000"></span>
-      <span class="googft-legend-range">1700 to 1930</span>
-    </div>
-    <div>
-      <span class="googft-legend-swatch" 
-style="background-color: #783f04"></span>
-      <span class="googft-legend-range">1930 to 1950</span>
-    </div>
-    <div>
-      <span class="googft-legend-swatch" 
-style="background-color: #ff9900"></span>
-      <span class="googft-legend-range">1950 to 1960</span>
-    </div>
-    <div>
-      <span class="googft-legend-swatch" 
-style="background-color: #00ff00"></span>
-      <span class="googft-legend-range">1960 to 1970</span>
-    </div>
-    <div>
-      <span class="googft-legend-swatch" 
-style="background-color: #6fa8dc"></span>
-      <span class="googft-legend-range">1970 to 1980</span>
-    </div>
-    <div>
-      <span class="googft-legend-swatch" 
-style="background-color: #0b5394"></span>
-      <span class="googft-legend-range">1980 to 1990</span>
-    </div>
-    <div>
-      <span class="googft-legend-swatch" 
-style="background-color: #351c75"></span>
-      <span class="googft-legend-range">1990 to 2000</span>
-    </div>
-    <div>
-      <span class="googft-legend-swatch" 
-style="background-color: #4c1130"></span>
-      <span class="googft-legend-range">2000 to 2013</span>
-    </div>
-    <div class="googft-legend-source">
-      <a href="http://www.google.com/fusiontables/DataSource?docid=1Cjp5kwTFW1zb7rCRILUg6PryPwo_9RkkM4kD960" target="_blank"></a>
-    </div>
-    <input id="googft-legend-close" style="display:none" type="button" value="Hide"></input>
-  </div>
+}
 
 
     <!-- Header osio, johon tulee otsikko ja ehka joki valikko -->
