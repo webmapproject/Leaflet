@@ -1,77 +1,52 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-cabaple" content="yes"> 
-    <link href="nouislider.min.css" rel="stylesheet">
-    <!-- Bootstarp scriptit -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    
-    <!-- Scripts from Leaflet-->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-    
-      <!-- Load Esri Leaflet from CDN -->
-  <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
-
-    <title>History of Helsinki buildings</title>
+    <meta charset="UTF-8">
+    <title>Leaflet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
     <style>
       html, body {
 	overflow:hidden;
 	height:100%;
 	}
-          #header {
-  background-color:rgba(255,255,255,0.8);
-  color:teal;
-  text-align:center;
-  font-family: "Lucida Sans Unicode", Lucida Grande, sans-serif;
-  position:absolute;
-  z-index:50;
-  right:0;
-  left:0;
-  top:0;
-  }
-      #footer {
-  background-color:#FF6600;
-  color:black;
-  clear:both;
-  text-align:left;
-  position:absolute;
-  width:100%;
-  bottom:0;
-  left:0;
-  right:0;
-  }
+	
       #map {
-  width:100%;
-  height:100%;
-  position:absolute;
-  left:0; 
-  }
+        width:100%;
+	height:100%;
+	position:absolute;
+	left:0;	
+        }
+      
+      .btn {
+	  margin:3px;
+	} 
 
-  .sidebar {
-  position:absolute;
-  top:50px; right:0; width:250px;
-  bottom:0;
-  overflow-x:auto;
-  background-color:rgba(255,255,255,0.8);
-  margin:0;
-  padding:5px;
-  font-size:15px;
-  border-radius:10px;
-  text-align:center;
-  z-index:80;
-  } 
-
-#slider {
-  height: 20px;
-  margin: 0 auto 30px;
-  width: 500px;
-}
-
+      .btn-round { 
+	font-weight: bold;
+	width: 19px;
+	height: 19px;
+	text-align: center;
+	padding: 1px 0;
+	font-size: 13px;
+	line-height: 0.1;
+	border-radius: 30px;
+	}
+      
+      .sidebar {
+	position:absolute;
+	top:0; right:0; width:250px;
+ 	bottom:0;
+	overflow-x:auto;
+	background-color: white;
+	margin:0;
+	padding:5px;
+	font-size:15px;
+	border-radius:10px;
+	text-align:center;
+	z-index:80;
+	}
+      
       #map-wrapper {
     	width: 100%;
     	height: 100%;
@@ -82,17 +57,73 @@
     	position: relative;
     	float: right;
 	}
-
-
-    </style>
-  </head>
-  
-
-    <!-- Function scripts -->  
-    <script src="nouislider.min.js"></script>
+      
+     
+      /*
+      .menu-ui {
+ 	background:#fff;
+  	position:absolute;
+  	top:10px;right:10px;
+  	z-index:1;
+  	border-radius:3px;
+  	width:120px;
+  	border:1px solid rgba(0,0,0,0.4);
+      }
+      .menu-ui a {
+    	font-size:13px;
+    	color:#404040;
+    	display:block;
+    	margin:0;padding:0;
+    	padding:10px;
+    	text-decoration:none;
+    	border-bottom:1px solid rgba(0,0,0,0.25);
+    	text-align:center;
+      }
+      .menu-ui a:first-child {
+      	border-radius:3px 3px 0 0;
+      }
+      .menu-ui a:last-child {
+      	border:none;
+      	border-radius:0 0 3px 3px;
+      }
+      .menu-ui a:hover {
+      	background:#f8f8f8;
+      	color:#404040;
+      }
+      .menu-ui a.active {
+      	background:#3887BE;
+      	color:#FFF;
+      }
+      .menu-ui a.active:hover {
+        background:#3074a4;
+      }
+    */
     
-<script type="text/javascript">
-
+    </style>
+  
+    <script>
+    
+      //CORS:n aktivointi, mahdollistaa pyyntöjen tekemisen verkkopiirin ulkopuolelta (domain)
+    	(function() {
+	  var cors_api_host = 'cors-anywhere.herokuapp.com';
+	  var cors_api_url = 'https://' + cors_api_host + '/';
+	  var slice = [].slice;
+	  var origin = window.location.protocol + '//' + window.location.host;
+	  var open = XMLHttpRequest.prototype.open;
+	  XMLHttpRequest.prototype.open = function() {
+	    var args = slice.call(arguments);
+	    var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
+	    if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
+	      targetOrigin[1] !== cors_api_host) {
+	        args[1] = cors_api_url + args[1];
+	      }
+	    return open.apply(this, args);
+	  };
+	})();
+    
+   
+      function init() {
+    	
     	//BASEMAP
   	var map = L.map('map').setView([60.1708, 24.9375], 13);
   	var layers = document.getElementById('menu-ui');
@@ -110,52 +141,372 @@
 		id: 'mapbox.streets'
 	}).addTo(map);
 	
-  
-  </script>
+	
+	
+	//WFS-tasot
+	//var viheralueet_wfs = "http://130.233.249.20:8080/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=web_map_project:hkr_ylre_viheralue&srsName=EPSG:4326&format=json&outputFormat=json&format_options=callback:getJson";
+	var viheralueet_wfs = "http://geoserver.hel.fi/geoserver/hkr/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=hkr:ylre_viheralue&srsName=EPSG:4326&format=json&outputFormat=json&format_options=callback:getJson"
+	//var vaki_wfs = "http://130.233.249.20:8080/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=WMS:vaki2014_1km_norm&filter=%3CPropertyIsEqualTo%3E%3CPropertyName%3Ekunta%3C/PropertyName%3E%3CLiteral%3E091%3C/Literal%3E%3C/PropertyIsEqualTo%3E&maxFeatures=1000&srsName=EPSG:4326&format=json&outputFormat=json&format_options=callback:getJson";
+	var paavo_kartta = "http://geoserv.stat.fi:8080/geoserver/postialue/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=postialue:pno_tilasto_2015&filter=%3CPropertyIsEqualTo%3E%3CPropertyName%3Ekunta%3C/PropertyName%3E%3CLiteral%3E091%3C/Literal%3E%3C/PropertyIsEqualTo%3E&maxFeatures=1000&srsName=EPSG:4326&format=json&outputFormat=json&format_options=callback:getJson";
+	//postialue:pno_2015 //postialue:pno_tilasto_2015
+	var coolPlaces = new L.LayerGroup();
+
+	//Viheralueet WFS
+	//var viheralueet = null;
+	var viheralueet_layer = $.ajax({ 
+          url: viheralueet_wfs,
+	  datatype:"json",
+	  jsonCallback: 'getJson',
+	  success : function (response) {
+            viheralueet = L.geoJson(response, {
+              style: function (feature) {
+                var fillColor, 
+                kaytto = feature.properties.kayttotarkoitus;
+                      
+                if ( kaytto == "Asemakaavoitettu viheralue" ) fillColor = "#00b300";
+                else if ( kaytto == "Kartano- ja huvila-alue" ) fillColor = "#ff8433";
+                else if ( kaytto == "Kesamaja-alue" ) fillColor = "#8a8a8a";
+                else if ( kaytto == "Koira-aitaus" ) fillColor = "#ffff00";
+                else if ( kaytto == "Leikkipaikka" ) fillColor = "#ffcccc";
+                else if ( kaytto == "Leikkipuisto" ) fillColor = "#ffaa80";
+		else if ( kaytto == "Luonnonsuojelualue" ) fillColor = "#ff3384";
+		else if ( kaytto == "Siirtolapuutarha" ) fillColor = "#888844";
+		else if ( kaytto == "Uimaranta-alue" ) fillColor = "#003cb3";
+		else if ( kaytto == "Venesatama / Venevalkama" ) fillColor = "#00b7e6";
+		else if ( kaytto == "Viljelypalsta" ) fillColor = "#ffffb3";
+		else if ( kaytto == "Muut viheralueet" ) fillColor = "#804c1a";
+		//else if ( kaytto == "Yleiskaavan viheralue" ) fillColor = "#ff0000";
+	        else fillColor == "black";  // no data
+		      
+	      //Muu toimiluokka
+	      //Yleiskaavan viheralue / luonnonsuojelualue
+	      //Yleiskaavan viheralue / kesämaja-alue
+	      //Yleiskaavan viheralue / kartanoalue
+	      //Yleiskaavan viheralue / leikkipuisto
+	      //Yleiskaavan viheralue
+	      //Yleiskaavan viheralue / erityiskohteet
+	      //Yleiskaavan viheralue / koira-aitaus
+	      //Ulkoilumetsä
+	      //Tontti (rakentamattomat / sopimus)
+	      //Erityiskohteet, asemakaavoitettu viheralue
+	      //Viljelypalsta-alue
+	      //Haudat (hautausmaat)
+	      //Suojaviheralue
+	      //Katualue
+	      //Rata-alue
+	      //Saari (saaret ilman siltayhteyttä)
+		      
+		return {
+		  color: "black", 
+		  weight: 1, 
+		  fillColor: fillColor, 
+		  fillOpacity: 0.8 
+		};
+                    	
+              },
+              onEachFeature: function (feature, layer) {
+                popupOptions = {maxWidth: 200};
+                layer.bindPopup("<b>Viheralueen tunnus: </b> " + feature.properties.viheralue_id +
+                  "<br><b>Nimi: </b> " + feature.properties.puiston_nimi +
+                  "<br><b>Käyttötarkoitus: </b> " + feature.properties.kayttotarkoitus +
+                  "<br><b>Käyttötarkoitus id: </b> " + feature.properties.kayttotarkoitus_id +
+                  "<br><b>Pinta-ala: </b> " + feature.properties.pinta_ala
+                  ,popupOptions);
+                      
+                //Mahdollistaa kohteen korostuksen ja kohdetta klikkaamalla siihen kohdistuksen  
+                layer.on({
+                  mousemove: mousemove,
+          	  mouseout: mouseout, 
+		  //click: zoomToFeature
+		});
+              }
+            }).addTo(map);
+          }
+	}); 
+
+
+
+	//Paavo WFS
+	//var paavo = null;
+	var paavo_layer = $.ajax({ 
+          url: paavo_kartta,
+	  datatype:"json",
+	  jsonCallback: 'getJson',
+	  success : function (response) {
+            paavo = L.geoJson(response, {
+              style: function (feature) {
+                var fillColor, 
+                vaki = feature.properties.he_vakiy;
+                      
+                //if ( vaki > 22000) fillColor =
+                if ( vaki > 24000) fillColor = "#990000";
+                else if ( vaki > 21000) fillColor = "#d7301f";
+                else if ( vaki > 18000 ) fillColor = "#ef6548";
+		else if ( vaki > 15000 ) fillColor = "#fc8d59";
+		else if ( vaki > 12000 ) fillColor = "#fdbb84";
+		else if ( vaki > 90000 ) fillColor = "#fdd49e";
+		else if ( vaki > 3000 ) fillColor = "#fee8c8";
+		else if ( vaki > 0 ) fillColor = "#fff7ec";
+		else fillColor = "#ebfaeb";  // no data
+		      
+		return {
+		  color: "black",
+		  weight: 2,
+		  fillColor: fillColor,
+		  fillOpacity: 0.8 
+		};
+		      
+              },
+              onEachFeature: function (feature, layer) {
+                popupOptions = {maxWidth: 200};
+                layer.bindPopup("<b>Alueen nimi: </b> " + feature.properties.nimi + 
+                  "<br><b>Väkimäärä: </b> " + feature.properties.he_vakiy +
+                  "<br><b>Asuntojen määrä: </b> " + feature.properties.ra_asunn +
+                  "<br><b>Asumisväljyys: </b> " + feature.properties.te_as_valj
+                  ,popupOptions);
+                        
+                //Mahdollistaa kohteen korostuksen ja kohdetta klikkaamalla siihen kohdistuksen  
+                layer.on({
+                  //mousemove: mousemove,
+          	  //mouseout: mouseout, 
+		  click: zoomToFeature
+		});    
+              }
+            }).addTo(map);
+          }
+	}); 
+
+	
+	function zoomToFeature(e) {
+	  map.fitBounds(e.target.getBounds());
+	}
+
+	function mousemove(e) {
+	  var layer = e.target;
+	
+	  // highlight feature
+	  layer.setStyle({
+	    weight: 3,
+	    opacity: 0.3,
+	    illOpacity: 0.9
+	  });
+	
+	  if (!L.Browser.ie && !L.Browser.opera) {
+	    layer.bringToFront();
+	  }
+	}
+
+	function mouseout(e) {
+          viheralueet.resetStyle(e.target);
+  	}
+
+
+	/*
+	//map.onclick -funktion rakentelua...
+	function onMapClick(e) { //(e), saadaan klikatun kohteen tietoja
+	    alert("Klikkasit karttaa, hienoa! ;)");
+	    //var marker = new L.marker(e).addTo(map);
+	}
+	map.on('click', onMapClick);
+	*/
+
+
+	map.on('click', function(ev) {
+	  // ev.latlng gives us the coordinates of
+	  // the spot clicked on the map.
+	  var c = ev.latlng;
+	
+	  //Muotoilun sateen koko pitaisi saada muutettua sellaiseksi, etta kayttaja voi sen valita
+	  var geojsonstyle = {
+	    radius: 100,
+	    fillColor: "#ff7800",
+	    color: "#000",
+	    weight: 1,
+	    opacity: 1,
+	    fillOpacity: 0.8
+	  };
+	
+	  var geojson = {
+	    "type": "Feature",
+	    "properties": {
+	      "name": "geojson piste"
+	    },
+	    "geometry": {
+	      "type": "Point",
+	      "coordinates": [c.lng, c.lat]
+	    }
+	  };
+	
+	  var pisteet = L.geoJson(geojson, {
+	    pointToLayer: function (feature, latlng) {
+	      return L.circleMarker(latlng, geojsonstyle);
+	    }
+	  }).addTo(map);
+	  
+	  var removeButton = document.getElementById('remove');
+	    removeButton.addEventListener('click',function(event) {
+	    pisteet.clearLayers();
+	  });
+	  
+	});
+	
+
+	
+	
+	
+	/*
+	//WMS-tasot
+	var rakennukset_wms = L.tileLayer.wms("http://130.233.249.20:8080/geoserver/WMS/wms", {
+		layers: 'WMS:Rakennukset',
+    		format: 'image/png',
+    		transparent: true
+	}).addTo(map);
+	
+	var vaki_wms = L.tileLayer.wms("http://130.233.249.20:8080/geoserver/WMS/wms", {
+		layers: 'WMS:vaki2014_1km',
+    		format: 'image/png',
+    		transparent: true
+	});
+
+	var aurinko_wms = L.tileLayer.wms("http://130.233.249.20:8080/geoserver/WMS/wms", {
+		layers: 'WMS:aurinkosahko_paneeli',
+    		format: 'image/png',
+    		transparent: true
+	});
+	*/
+	
+	/*
+	//LAYERTOGGLER
+	//addLayer(rakennukset_wms, 'Rakennukset', 1);
+	//addLayer(vaki_wms, 'Väkimäärä', 2);
+	//addLayer(aurinko_wms, 'Aurinkopaneelit', 3);
+	addLayer(viheralueet_layer, 'Viheralueet', 1);
+	addLayer(paavo_layer, 'Väestöruudukko', 2);
+	
+	//map.removeLayer(rakennukset_wms);
+	//map.removeLayer(vaki_wms);
+	//map.removeLayer(aurinko_wms);
+
+  	function addLayer(layer, name, zIndex) {
+	    layer
+	        .setZIndex(zIndex)
+	        .addTo(map);
+	
+	    // Create a simple layer switcher that
+	    // toggles layers on and off.
+	    var link = document.createElement('a');
+	        link.href = '#';
+	        link.className = 'active';
+	        link.innerHTML = name;
+	
+	    link.onclick = function(e) {
+	        e.preventDefault();
+	        e.stopPropagation();
+	
+	        if (map.hasLayer(layer)) {
+	            map.removeLayer(layer);
+	            this.className = '';
+	        } else {
+	            map.addLayer(layer);
+	            this.className = 'active';
+	        }
+	    };
+	    
+	    layers.appendChild(link);
+	}
+	*/
+	
+	//WMS-tason popup-scripti
+	/*
+	ms_url="http://130.233.249.20:8080/geoserver/WMS/wms";
+	map.addEventListener('click', Identify);
+	
+	function Identify(e) 
+	{
+	    // set parameters needed for GetFeatureInfo WMS request
+	    var BBOX = map.getBounds().toBBoxString();
+	    var WIDTH = map.getSize().x;
+	    var HEIGHT = map.getSize().y;
+	    var X = map.layerPointToContainerPoint(e.layerPoint).x;
+	    var Y = map.layerPointToContainerPoint(e.layerPoint).y;
+	     // compose the URL for the request
+	    var URL = ms_url + '?SERVICE=WMS&VERSION=1.1.0&REQUEST=GetFeatureInfo&LAYERS=WMS:Rakennukset&QUERY_LAYERS=WMS:Rakennukset&BBOX='+BBOX+'&FEATURE_COUNT=1&HEIGHT='+HEIGHT+'&WIDTH='+WIDTH+'&INFO_FORMAT=text%2Fhtml&SRS=EPSG%3A4326&X='+X+'&Y='+Y;
+	
+	    //send the asynchronous HTTP request using jQuery $.ajax
+	    $.ajax({
+	        url: URL,
+	        dataType: "html",
+	        type: "GET",
+	        success: function(data) 
+	        {
+	            var popup = new L.Popup
+	            ({
+	                maxWidth: 300
+	            });
+	
+	            popup.setContent(data);
+	            popup.setLatLng(e.latlng);
+	            map.openPopup(popup);
+	        }
+	    });
+	}
+	*/
+	
+      }
       
-
-
-    <!-- Header osio, johon tulee otsikko ja ehka joki valikko -->
-    <div class="container-fluid">
-    <div id="header">
-        <h1><span>History of Helsinki Buildings</span></h1>
-       
-<!--      <div class="ol-toggle-options">  
-     <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Menu</button>   
-        </div>
--->         <div id="slider">
-
-        </div>
-<!--        <div>
-        </div>
--->        <div style="height:20px;">
-       </div>
-  </div>
+    </script>
+  </head>  
     
-<!--
-  <div id='sidebar' class='sidebar' style="display: yes;">
-            
-      <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Hide menu</button>   
-  <br><br>  
-
-  <br><br>
-
-</div>
--->   
-    <!-- Lisaa kartan halutulla koolla -->
-    <div class="container-fluid">
-  <div id="map">
+  <body onload="init()">  
+    
+    <!-- MapBox scriptit -->
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
+    
+    <!-- Leaflet scriptit -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    
+    <!-- jQuery scriptit -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
+    <!-- Bootstarp scriptit -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+   
+    <!--ESRI-leaflet scripti -->
+    <script src="https://pesonet1.github.io/Leaflet/esri-leaflet.js"></script>
+    
+    
+    <!-- Sivupalkin piilotus -->
+    <script>
+      function toggleControlPanel(){
+        var sidebar = document.getElementById("sidebar");
+        if (sidebar.style.display == "none") {
+          sidebar.style.display = "block";
+        }
+        else {
+          sidebar.style.display = "none";
+        }
+      }
+    </script>
+    
+    <div class="span9" style="height:100%">
+      <div id="map-wrapper">
+    	<div id="map"></div>
+  	<div id="button-wrapper">  
+	    <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Valikko</button>   
+    	</div>
+      </div>
+    
+      <div id='sidebar' class='sidebar' style="display: none;">
+    	  <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Sulje valikko</button>
+    	  
+    	   <button id="remove" class="btn btn-primary">Poista piste</button>
+      </div>
     </div>
-   </div>
- 
-    <!-- Tahan voidaan laittaa sivun alaosan tietoja, kuten tekijat ja copyright merkinnat -->
-<!--    <div class="container-fluid">
-  <div id="footer">
-        <p> Web Map Project</p>
-  </div>
-    </div>
--->  
+    	
+    <nav id='menu-ui' class='menu-ui'></nav>
+    
   </body>
 </html>
-
-
