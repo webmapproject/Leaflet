@@ -58,47 +58,7 @@
     	float: right;
 	}
       
-     
-      /*
-      .menu-ui {
- 	background:#fff;
-  	position:absolute;
-  	top:10px;right:10px;
-  	z-index:1;
-  	border-radius:3px;
-  	width:120px;
-  	border:1px solid rgba(0,0,0,0.4);
-      }
-      .menu-ui a {
-    	font-size:13px;
-    	color:#404040;
-    	display:block;
-    	margin:0;padding:0;
-    	padding:10px;
-    	text-decoration:none;
-    	border-bottom:1px solid rgba(0,0,0,0.25);
-    	text-align:center;
-      }
-      .menu-ui a:first-child {
-      	border-radius:3px 3px 0 0;
-      }
-      .menu-ui a:last-child {
-      	border:none;
-      	border-radius:0 0 3px 3px;
-      }
-      .menu-ui a:hover {
-      	background:#f8f8f8;
-      	color:#404040;
-      }
-      .menu-ui a.active {
-      	background:#3887BE;
-      	color:#FFF;
-      }
-      .menu-ui a.active:hover {
-        background:#3074a4;
-      }
-    */
-    
+
     </style>
   
     <script>
@@ -178,23 +138,6 @@
 		//else if ( kaytto == "Yleiskaavan viheralue" ) fillColor = "#ff0000";
 	        else fillColor == "black";  // no data
 		      
-	      //Muu toimiluokka
-	      //Yleiskaavan viheralue / luonnonsuojelualue
-	      //Yleiskaavan viheralue / kesämaja-alue
-	      //Yleiskaavan viheralue / kartanoalue
-	      //Yleiskaavan viheralue / leikkipuisto
-	      //Yleiskaavan viheralue
-	      //Yleiskaavan viheralue / erityiskohteet
-	      //Yleiskaavan viheralue / koira-aitaus
-	      //Ulkoilumetsä
-	      //Tontti (rakentamattomat / sopimus)
-	      //Erityiskohteet, asemakaavoitettu viheralue
-	      //Viljelypalsta-alue
-	      //Haudat (hautausmaat)
-	      //Suojaviheralue
-	      //Katualue
-	      //Rata-alue
-	      //Saari (saaret ilman siltayhteyttä)
 		      
 		return {
 		  color: "black", 
@@ -276,10 +219,6 @@
           }
 	}); 
 
-	
-	function zoomToFeature(e) {
-	  map.fitBounds(e.target.getBounds());
-	}
 
 	function mousemove(e) {
 	  var layer = e.target;
