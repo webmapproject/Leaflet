@@ -70,8 +70,37 @@
     	float: right;
 	}
       
+        #basemaps-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 400;
+    background: white;
+    padding: 10px;
+  }
+  #basemaps {
+    margin-bottom: 5px;
+  }
 
     </style>
+    
+    
+    <div id="map"></div>
+
+<div id="basemaps-wrapper" class="leaflet-bar">
+  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+    <option value="Topographic">Topographic<options>
+    <option value="Streets">Streets</option>
+    <option value="NationalGeographic">National Geographic<options>
+    <option value="Oceans">Oceans<options>
+    <option value="Gray">Gray<options>
+    <option value="DarkGray">Dark Gray<options>
+    <option value="Imagery">Imagery<options>
+    <option value="ShadedRelief">Shaded Relief<options>
+  </select>
+</div>
+    
+    
   
     <script>
     
@@ -138,6 +167,7 @@
    
     <!--ESRI-leaflet scripti -->
 <!--    <script src="http://pesonet1.github.io/Leaflet/esri-leaflet.js"></script> -->
+<script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
 
     <!-- Turf -->
     <script src="https://pesonet1.github.io/Leaflet/turf.min.js"></script>
