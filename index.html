@@ -151,6 +151,18 @@
 
 map.setView([52.5, -1.8], 6);
 	
+	// -- Load GB disticts as a WMS layer --
+
+var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/service/wms?', {
+    layers: 'osgb:district_borough_unitary_region',
+    tiled: true,
+    format: 'image/png',
+    transparent: true,
+    maxZoom: 14,
+    minZoom: 0,
+    continuousWorld: true
+}).addTo(map);
+	
       }
       
     </script>
