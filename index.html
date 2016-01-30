@@ -105,7 +105,7 @@
     <script>
     
       //CORS:n aktivointi, mahdollistaa pyyntöjen tekemisen verkkopiirin ulkopuolelta (domain)
-    	(function() {
+/*    	(function() {
 	  var cors_api_host = 'cors-anywhere.herokuapp.com';
 	  var cors_api_url = 'https://' + cors_api_host + '/';
 	  var slice = [].slice;
@@ -121,18 +121,13 @@
 	    return open.apply(this, args);
 	  };
 	})();
-    
+ */   
    
       function init() {
-    	
+/*    	
     	//BASEMAP
   	var map = L.map('map').setView([60.1708, 24.9375], 13);
   	var layers = document.getElementById('menu-ui');
-  	
-  	
-  	//L.mapbox.accessToken = 'pk.eyJ1IjoicGVzb25ldDEiLCJhIjoiY2lqNXJua2k5MDAwaDI3bTNmaGZqc2ZuaSJ9.nmLkOlsQKzwMir9DfmCNPg';
-	//var map = L.mapbox.map('map', 'mapbox.streets').setView([60.1708, 24.9375], 13);
-  	
   	
   	var basemap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicGVzb25ldDEiLCJhIjoiY2lqNXJua2k5MDAwaDI3bTNmaGZqc2ZuaSJ9.nmLkOlsQKzwMir9DfmCNPg', {
 		maxZoom: 18,
@@ -141,7 +136,20 @@
 			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 		id: 'mapbox.streets'
 	}).addTo(map);
+*/
 	
+	var map = new L.Map('map', {
+    layers: [
+        new L.TileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+            }
+        )
+    ]
+});
+
+map.setView([52.5, -1.8], 6);
 	
       }
       
@@ -205,25 +213,6 @@
         </div>
   </div>
  
-<!--    
-   <div class="span9" style="height:100%">
-      <div id="map-wrapper">
-    	<div id="map"></div>
-  	<div id="button-wrapper">  
-	    <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Valikko</button>   
-    	</div>
-      </div>
-    
-      <div id='sidebar' class='sidebar' style="display: none;">
-    	  <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Sulje valikko</button>
-      </div>
-    </div>
-    	
-    <nav id='menu-ui' class='menu-ui'></nav>
-
--->
-
-
   <div id='sidebar' class='sidebar' style="display: none;"
   >
             
