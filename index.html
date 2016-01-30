@@ -153,7 +153,26 @@
       }
     </script>
     
-    <div class="span9" style="height:100%">
+     <!-- Header osio, johon tulee otsikko ja ehka joki valikko -->
+    <div class="container-fluid">
+    <div id="header">
+        <h1><span>Helsinki Building years</span></h1>
+       
+      <div class="ol-toggle-options">  
+     <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Menu</button>   
+        </div>
+        <div id="slider">
+
+        </div>
+        <div>
+
+        </div>
+        <div style="height:20px;">
+
+        </div>
+  </div>
+    
+<!--    <div class="span9" style="height:100%">
       <div id="map-wrapper">
     	<div id="map"></div>
   	<div id="button-wrapper">  
@@ -167,6 +186,27 @@
     </div>
     	
     <nav id='menu-ui' class='menu-ui'></nav>
+-->
+
+
+  <div id='sidebar' class='sidebar' style="display: none;"
+  >
+            
+      <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Hide menu</button>   
+
+       <div style="text-align: left; margin-left:1%;">
+               <form>
+          <input type="radio" name="rbtnlist_maptype" value="1" checked="true" onchange="handleChange(1);"/>Road map<br />
+          <input type="radio" name="rbtnlist_maptype" value="0" onchange="handleChange(0);" />Satellite<br />
+          <input type="radio" name="rbtnlist_maptype" value="2" onchange="handleChange(2);" />Hybrid<br />
+          <input type="radio" name="rbtnlist_maptype" value="3" onchange="handleChange(3);" />Terrain<br />
+        </form></div>
+  <br><br>
+  
+  <!-- Lisaa kartan halutulla koolla -->
+    <div class="container-fluid">
+  <div id="map">
+    </div>
     
   </body>
 </html>
