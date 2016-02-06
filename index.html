@@ -165,6 +165,29 @@ var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/serv
 	
       }
       
+      
+      var buildings = "https://webmapproject.github.io/Mapbox/buildings.json"
+
+      L.geoJson(buildings, {
+
+			style: function (feature) {
+				return feature.properties && feature.properties.style;
+			},
+
+			onEachFeature: onEachFeature,
+
+			pointToLayer: function (feature, latlng) {
+				return L.circleMarker(latlng, {
+					radius: 8,
+					fillColor: "#ff7800",
+					color: "#000",
+					weight: 1,
+					opacity: 1,
+					fillOpacity: 0.8
+				});
+			}
+		}).addTo(map);
+      
       //var rak_wfs = "http://kartta.hel.fi/ws/geoserver/avoindata/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=avoindata:Rakennukset&SRSNAME=EPSG:3879"
       
     </script>
