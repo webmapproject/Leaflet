@@ -214,9 +214,9 @@ var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/serv
 
  
       
-      //var buildings = buildings.json//"https://webmapproject.github.io/Leaflet/buildings.json"
+      var buildings = "https://api.mapbox.com/v4/keskitj3.b8xaus7m/features.json?access_token=pk.eyJ1Ijoia2Vza2l0ajMiLCJhIjoiY2lrY2t5d3BvMDA0MHZ0bHllcmk0b3ExayJ9.XyxPMcKt4EtXDHUV00RbPA"//"https://webmapproject.github.io/Leaflet/buildings.json"//buildings.json//
 
-/*      L.geoJson(building, {
+      L.geoJson(building, {
 
 			style:  {
             weight: 2,
@@ -250,13 +250,15 @@ var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/serv
        var filter = null;
   var fillcolor = null;
 */  
-  
+/*  
     function popUp(feature, layer) {
     layer.bindPopup(feature.properties.name);
   }
   
   var geojsonLayer = new L.GeoJSON.AJAX("./buildings.json", { onEachFeature:popUp});
   geojsonLayer.addTo(map);
+*/
+
 /*  
   //Taman funktion avulla uusi karttataso voidaan kutsua kayttaen haluttua filteria ja tason varia
   //function update_layer() {
