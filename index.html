@@ -214,8 +214,35 @@ var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/serv
 
  
       
-      var buildings = "https://api.mapbox.com/v4/keskitj3.b8xaus7m/features.json?access_token=pk.eyJ1Ijoia2Vza2l0ajMiLCJhIjoiY2lrY2t5d3BvMDA0MHZ0bHllcmk0b3ExayJ9.XyxPMcKt4EtXDHUV00RbPA"//"https://webmapproject.github.io/Leaflet/buildings.json"//buildings.json//
+      mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FicmllbGFhZGFtY3p5ayIsImEiOiJjaWpldzV6ZncwMDA1dnhtNG56OGdhc2FvIn0.jW6mw1QLlMkBLgpAH0NXqA';
+      //"https://api.mapbox.com/v4/keskitj3.b8xaus7m/features.json?access_token=pk.eyJ1Ijoia2Vza2l0ajMiLCJhIjoiY2lrY2t5d3BvMDA0MHZ0bHllcmk0b3ExayJ9.XyxPMcKt4EtXDHUV00RbPA"//"https://webmapproject.github.io/Leaflet/buildings.json"//buildings.json//
 
+<!-- Adding layer -->
+		layer = map.on('style.load', function () {
+			map.addSource('buildings', {
+				type: 'vector',
+				url: 'mapbox://gabrielaadamczyk.dui0bi44'
+			});
+			map.addLayer({
+				'id': 'buildings',
+				"interactive": true,
+				'type': 'fill',
+				'source': 'buildings',
+	//"Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1]// + " AND 'Käyttötarkoitus 1' IN (" + rakennustyyppi + ")"			
+				"filter": ["Year_of_co < 2000"],//["==", "Year_of_co", 2000],
+				'paint': {
+					"fill-color": "#d44242"
+				},
+				'source-layer': 'buildings'
+			});
+
+		});
+		
+		addLayer('Buildings', 'buildings');	
+
+
+
+/*
       L.geoJson(building, {
 
 			style:  {
@@ -225,7 +252,7 @@ var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/serv
             fillColor: "#B0DE5C",
             fillOpacity: 0.8
         }, 
-
+*/
         /* function (feature) {
 				return feature.properties && feature.properties.style;
 			},
