@@ -218,7 +218,16 @@ var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/serv
       //"https://api.mapbox.com/v4/keskitj3.b8xaus7m/features.json?access_token=pk.eyJ1Ijoia2Vza2l0ajMiLCJhIjoiY2lrY2t5d3BvMDA0MHZ0bHllcmk0b3ExayJ9.XyxPMcKt4EtXDHUV00RbPA"//"https://webmapproject.github.io/Leaflet/buildings.json"//buildings.json//
 
 <!-- Adding layer -->
-		layer = map.on('style.load', function () {
+
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox://gabrielaadamczyk.dui0bi44',
+    accessToken: 'pk.eyJ1IjoiZ2FicmllbGFhZGFtY3p5ayIsImEiOiJjaWpldzV6ZncwMDA1dnhtNG56OGdhc2FvIn0.jW6mw1QLlMkBLgpAH0NXqA';
+}).addTo(map);
+
+
+/*		layer = map.on('style.load', function () {
 			map.addSource('buildings', {
 				type: 'vector',
 				url: 'mapbox://gabrielaadamczyk.dui0bi44'
@@ -237,7 +246,7 @@ var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/serv
 			});
 
 		}).addTo(map);//;
-		
+*/		
 		//addLayer('Buildings', 'buildings');	
 
 
