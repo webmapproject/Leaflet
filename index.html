@@ -31,7 +31,63 @@
 	<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.1.0/mapbox-gl-geocoder.js'></script>
 	<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.1.0/mapbox-gl-geocoder.css' type='text/css' />
 		
+		<div id='map'></div>
+
+<!-- Header -->
+	<div class="container-fluid">
+		<div id="header">
+				<h2><span>History of Helsinki</span></h2>
+		   
+			<div class="ol-toggle-options">  
+				<button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Menu</button>   
+			</div>
+			<div id="slider"></div>
+			<div style="height:20px;"></div>
+			
+		</div>	
+		
+<!-- changing basemap -->	
+		<div id='sidebar' class='sidebar' style="display: none;">
+			<button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Hide menu</button>
+			<div style="text-align: left; margin-left:1%;">
+				<h4> Select basemap: </h4>
+				<input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
+				<label for='basic'>basic</label><br>
+				<input id='streets' type='radio' name='rtoggle' value='streets'>
+				<label for='streets'>streets</label><br>
+				<input id='emerald' type='radio' name='rtoggle' value='emerald'>
+				<label for='emerald'>emerald</label><br>
+				<input id='bright' type='radio' name='rtoggle' value='bright'>
+				<label for='bright'>bright</label><br>
+				<input id='light' type='radio' name='rtoggle' value='light'>
+				<label for='light'>light</label><br>
+				<input id='dark' type='radio' name='rtoggle' value='dark'>
+				<label for='dark'>dark</label><br>
+				<input id='satellite' type='radio' name='rtoggle' value='satellite'>
+				<label for='satellite'>satellite</label>
+				<br>
+                <br>
+                <h4><link> Helsinki building data: </link> </h4>
+                <a href="http://www.hri.fi/fi/data/helsingin-kaupungin-rakennusrekisterin-ote-62012/">Helsingin kaupungin rakennusrekisterin ote 6/2012 </a>
+                <br>
+                <div id="nodelist">
+        		<em>Click on the map to get feature info</em>
+    		</div>
+                <br>
+                <h4> Developer team: </h4>Miska Kauppinen<br/>Gabriela Adamczyk<br/>Juhani Keskitalo<br />
+			</div>
+			
+			<!--to show and hide layer buildings unnecessary???-->
+			<nav id="menu"></nav>		
+		</div>
+	</div>
 	
+<!-- possible footer -->
+   <!-- <div class="container-fluid">
+            <div id="footer">
+                <p> Web Map Project</p>
+            </div>
+        </div> -->
     
     
     
@@ -524,138 +580,5 @@
             }
         }
     </script>
-
-    <div id="googft-mapCanvas"></div>
-    
-
-   <!--     Legend from fusion tables
-
-    <input id="googft-legend-open" style="display:none" type="button" value="Legend"/>
-    <div id="googft-legend">
-        <p id="googft-legend-title">Building year</p>
-        <div>
-            <span class="googft-legend-swatch"
-                  style="background-color: #ff0000"></span>
-            <span class="googft-legend-range">1700 to 1930</span>
-        </div>
-        <div>
-            <span class="googft-legend-swatch"
-                  style="background-color: #783f04"></span>
-            <span class="googft-legend-range">1930 to 1950</span>
-        </div>
-        <div>
-            <span class="googft-legend-swatch"
-                  style="background-color: #ff9900"></span>
-            <span class="googft-legend-range">1950 to 1960</span>
-        </div>
-        <div>
-            <span class="googft-legend-swatch"
-                  style="background-color: #00ff00"></span>
-            <span class="googft-legend-range">1960 to 1970</span>
-        </div>
-        <div>
-            <span class="googft-legend-swatch"
-                  style="background-color: #6fa8dc"></span>
-            <span class="googft-legend-range">1970 to 1980</span>
-        </div>
-        <div>
-            <span class="googft-legend-swatch"
-                  style="background-color: #0b5394"></span>
-            <span class="googft-legend-range">1980 to 1990</span>
-        </div>
-        <div>
-            <span class="googft-legend-swatch"
-                  style="background-color: #351c75"></span>
-            <span class="googft-legend-range">1990 to 2000</span>
-        </div>
-        <div>
-            <span class="googft-legend-swatch"
-                  style="background-color: #4c1130"></span>
-            <span class="googft-legend-range">2000 to 2013</span>
-        </div>
-        <div class="googft-legend-source">
-            <a href="http://www.google.com/fusiontables/DataSource?docid=1Cjp5kwTFW1zb7rCRILUg6PryPwo_9RkkM4kD960" target="_blank"></a>
-        </div>
-        <input id="googft-legend-close" style="display:none" type="button" value="Hide"/>
-    </div>
-    -->
-
-    <!-- Header  -->
-    <div class="container-fluid">
-        <div id="header">
-            <h2><span>History of Helsinki</span></h2>
-
-            <div class="ol-toggle-options">
-                <button class="btn btn-primary" title="sidebar" onclick="toggleControlPanel()" href="#toggle">Menu</button>
-
-            </div>
-            <div id="slider">
-            </div>
-            <div style="height:20px;">
-
-
-            <div class="btn-group">
-              <button class="btn btn-primary">Building types</button>
-              <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><input type="checkbox"-<label for="ID">Label</label></li>
-                  <li><a href="#">HTML</a></li>
-                  <li><a href="#">CSS</a></li>
-                  <li><a href="#">JavaScript</a></li>
-                  <!-- Other items -->
-                </ul>
-            </div>
-
-            
-            </div>
-        </div>
-
-        <div id='sidebar' class='sidebar' style="display: none;">
-			<button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Hide menu</button>
-			<div style="text-align: left; margin-left:1%;">
-				<h4> Select basemap: </h4>
-				<input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
-				<label for='basic'>basic</label><br>
-				<input id='streets' type='radio' name='rtoggle' value='streets'>
-				<label for='streets'>streets</label><br>
-				<input id='emerald' type='radio' name='rtoggle' value='emerald'>
-				<label for='emerald'>emerald</label><br>
-				<input id='bright' type='radio' name='rtoggle' value='bright'>
-				<label for='bright'>bright</label><br>
-				<input id='light' type='radio' name='rtoggle' value='light'>
-				<label for='light'>light</label><br>
-				<input id='dark' type='radio' name='rtoggle' value='dark'>
-				<label for='dark'>dark</label><br>
-				<input id='satellite' type='radio' name='rtoggle' value='satellite'>
-				<label for='satellite'>satellite</label>
-                    <br>
-                    <br>
-                    <h4><link> Helsinki building data: </link> </h4>
-                    <a href="http://www.hri.fi/fi/data/helsingin-kaupungin-rakennusrekisterin-ote-62012/">Helsingin kaupungin rakennusrekisterin ote 6/2012 </a>
-                    <br>
-                    <div id="nodelist">
-        		        <em>Click on the map to get feature info</em>
-    		        </div>
-                    <br>
-                    <h4> Developer team: </h4>
-                    Miska Kauppinen<br />
-                    Gabriela Adamczyk<br />
-                    Juhani Keskitalo<br />
-                    
-                    
-
-                </form>
-            </div>
-           
-       
-            
-
-                <!-- possible footer -->
-                <!--    <div class="container-fluid">
-                  <div id="footer">
-                        <p> Web Map Project</p>
-                  </div>
-                    </div>
-                -->
 </body>
 </html>
