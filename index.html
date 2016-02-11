@@ -307,11 +307,11 @@
 		
 		addLayer('Buildings', 'buildings');
 	
- //	function update(currentView, centercoords, maptype) {
+ 	function update(currentView, centercoords, maptype) {
 
-//	layer.setFilter(function(f) {
-//            return f.properties['marker-symbol'] === 'fast-food';
-//        });
+		layer.setFilter(function() { return false; })
+		layer.addTo(map);
+        });
         //return false;
 
 	//var t = sliderSet.get();
