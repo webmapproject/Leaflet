@@ -281,7 +281,7 @@
 	mapType = 'custom';
 	
 	/*<!-- Adding layer -->*/
-		L.mapbox.layer = map.on('style.load', function () {
+		mapbox.layer = map.on('style.load', function () {
 			map.addSource('buildings', {
 				type: 'vector',
 				url: 'mapbox://gabrielaadamczyk.dui0bi44'
