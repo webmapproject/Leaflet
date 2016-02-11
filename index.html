@@ -310,7 +310,8 @@
 	
  	function update(t) {
 		var t = t
-		map.setFilter('buildings', [">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]])//layer.setFilter(function() { return false; })
+		setFilter(layer, [[">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]]])
+		//map.setFilter('buildings', [">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]])//layer.setFilter(function() { return false; })
 		document.getElementById('nodelist').innerHTML = "filtteröinnissä vikkaa" + t//'<iframe seamless src="' + t + '"></iframe>';
 		//layer.addTo(map);
         };
