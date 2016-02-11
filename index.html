@@ -313,7 +313,7 @@
 		document.getElementById('nodelist').innerHTML = "filtteröinnissä vikkaa" + t[0] + t[1]//'<iframe seamless src="' + t + '"></iframe>';
 
 		//setFilter(layer, [">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]])
-		map.setFilter("all", [">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]])//layer.setFilter(function() { return false; })
+		map.setFilter("all", [">=","Year_of_co", 1700], ["<=","Year_of_co", 1950])//layer.setFilter(function() { return false; })
 		//layer.addTo(map);
         };
         //return false;
