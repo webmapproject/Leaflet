@@ -307,7 +307,7 @@
 		
 		addLayer('Buildings', 'buildings');
 	
-// 	function update(currentView, centercoords, maptype) {
+ //	function update(currentView, centercoords, maptype) {
 
 //	layer.setFilter(function(f) {
 //            return f.properties['marker-symbol'] === 'fast-food';
@@ -432,14 +432,6 @@ $("#slider").click(function (event) {
 */
 /*copy from the nouislider before layer*/
 
-	//dummy t variable
-
-	if (i==0) {
-		var t = [1800, 2013]
-		var i = 1
-	}
-	
-	
 	$(document).ready(function () {
         var slider = document.getElementById('slider');
 
@@ -472,6 +464,7 @@ $("#slider").click(function (event) {
                     zoom: zoomi,
                     styles: mapstyles
                 };
+             update(zoomi, centercoords, mapType);
             }
 	
 	document.getElementById('nodelist').innerHTML = "vaihto" + t
@@ -505,14 +498,6 @@ $("#slider").click(function (event) {
         setDownBoarderhover();
         setTopBoarderhover();
     }
-
-//var t = sliderSet.get();
-
-
-
-
-
-	
 
 /*
 
