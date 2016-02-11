@@ -615,14 +615,21 @@
             <button class="btn btn-primary" title="Sivupalkki" onclick="toggleControlPanel()" href="#toggle">Hide menu</button>
             <div style="text-align: left; margin-left:1%;">
                 <form>
-                    <h4> Select basemap: </h4>
-                    <input type="radio" name="rbtnlist_maptype" value="3" checked="checked" onchange="handleChange(5);" />Blue<br />
-                    <input type="radio" name="rbtnlist_maptype" value="3" onchange="handleChange(4);" />Dark<br />
-                    <input type="radio" name="rbtnlist_maptype" value="3" onchange="handleChange(6);" />Light<br />
-                    <input type="radio" name="rbtnlist_maptype" value="0" onchange="handleChange(0);" />Satellite<br />
-                    <input type="radio" name="rbtnlist_maptype" value="1" onchange="handleChange(1);" />Road map<br />
-                    <input type="radio" name="rbtnlist_maptype" value="2" onchange="handleChange(2);" />Hybrid<br />
-                    <input type="radio" name="rbtnlist_maptype" value="3" onchange="handleChange(3);" />Terrain<br />
+				<h4> Select basemap: </h4>
+				<input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
+				<label for='basic'>basic</label><br>
+				<input id='streets' type='radio' name='rtoggle' value='streets'>
+				<label for='streets'>streets</label><br>
+				<input id='emerald' type='radio' name='rtoggle' value='emerald'>
+				<label for='emerald'>emerald</label><br>
+				<input id='bright' type='radio' name='rtoggle' value='bright'>
+				<label for='bright'>bright</label><br>
+				<input id='light' type='radio' name='rtoggle' value='light'>
+				<label for='light'>light</label><br>
+				<input id='dark' type='radio' name='rtoggle' value='dark'>
+				<label for='dark'>dark</label><br>
+				<input id='satellite' type='radio' name='rtoggle' value='satellite'>
+				<label for='satellite'>satellite</label>
                     <br>
                     <br>
                     <h4><link> Helsinki building data: </link> </h4>
