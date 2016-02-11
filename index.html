@@ -457,14 +457,14 @@ $("#slider").click(function (event) {
         slider.noUiSlider.on('change', function () {
             var zoomi = map.getZoom();
             var centercoords = map.getCenter();
-
+	    update(zoomi, centercoords, mapType);
             if (mapType == 'custom') {
                 mapOptions = {
                     center: centercoords,
                     zoom: zoomi,
                     styles: mapstyles
                 };
-             update(zoomi, centercoords, mapType);
+             
             }
 	
 	//document.getElementById('nodelist').innerHTML = "vaihto" + t
