@@ -1,393 +1,574 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Leaflet</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
- 
-    <style>
-      html, body {
-	overflow:hidden;
-	height:100%;
-	}
-	
-	#header {
-  background-color:rgba(255, 255, 255, 0.7);
-  color:black;
-  text-align:center;
-  font-family: "Lucida Sans Unicode", Lucida Grande, sans-serif;
-  position:absolute;
-  z-index:50;
-  right:0;
-  left:0;
-  top:0;
-  }
-	
-      #map {
-        width:100%;
-	height:100%;
-	position:absolute;
-	left:0;	
-        }
-      
-      .btn {
-	  margin:3px;
-	} 
-
-      .btn-round { 
-	font-weight: bold;
-	width: 19px;
-	height: 19px;
-	text-align: center;
-	padding: 1px 0;
-	font-size: 13px;
-	line-height: 0.1;
-	border-radius: 30px;
-	}
-      
-      .sidebar {
-	position:absolute;
-	top:0; right:0; width:250px;
- 	bottom:0;
-	overflow-x:auto;
-	background-color: white;
-	margin:0;
-	padding:5px;
-	font-size:15px;
-	border-radius:10px;
-	text-align:center;
-	z-index:80;
-	}
-      
-      #map-wrapper {
-    	width: 100%;
-    	height: 100%;
-    	position: relative;
-	}
-
-      #button-wrapper {
-    	position: relative;
-    	float: right;
-	}
-      
-        #basemaps-wrapper {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 400;
-    background: white;
-    padding: 10px;
-  }
-  #basemaps {
-    margin-bottom: 5px;
-  }
-
-    </style>
-    
-    
-    <div id="map"></div>
-
-<div id="basemaps-wrapper" class="leaflet-bar">
-  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-    <option value="Topographic">Topographic<options>
-    <option value="Streets">Streets</option>
-    <option value="NationalGeographic">National Geographic<options>
-    <option value="Oceans">Oceans<options>
-    <option value="Gray">Gray<options>
-    <option value="DarkGray">Dark Gray<options>
-    <option value="Imagery">Imagery<options>
-    <option value="ShadedRelief">Shaded Relief<options>
-  </select>
-</div>
-
-    <!-- MapBox scriptit -->
-<!--    <script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
--->    
-    <!-- Leaflet scriptit -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-    
-    <!-- jQuery scriptit -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-cabaple" content="yes">
+    <link href="nouislider.min.css" rel="stylesheet">
     <!-- Bootstarp scriptit -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-   
-    <!--ESRI-leaflet scripti -->
-<!--    <script src="http://pesonet1.github.io/Leaflet/esri-leaflet.js"></script> -->
-<script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <title>History of Helsinki buildings</title>
+    <style>
+        html, body, #googft-mapCanvas {
+            overflow: hidden;
+            height: 100%;
+        }
 
-    <!-- Turf 
-    <script src="https://pesonet1.github.io/Leaflet/turf.min.js"></script>
-    -->
-    
-    <script src="https://raw.github.com/calvinmetcalf/leaflet-ajax/master/dist/leaflet.ajax.min.js"></script>
-    
-<!--    <script src="buildings2.js" type="text/javascript"></script>
-  -->
-    <script>
-    
-      //CORS:n aktivointi, mahdollistaa pyyntöjen tekemisen verkkopiirin ulkopuolelta (domain)
-/*    	(function() {
-	  var cors_api_host = 'cors-anywhere.herokuapp.com';
-	  var cors_api_url = 'https://' + cors_api_host + '/';
-	  var slice = [].slice;
-	  var origin = window.location.protocol + '//' + window.location.host;
-	  var open = XMLHttpRequest.prototype.open;
-	  XMLHttpRequest.prototype.open = function() {
-	    var args = slice.call(arguments);
-	    var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
-	    if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
-	      targetOrigin[1] !== cors_api_host) {
-	        args[1] = cors_api_url + args[1];
-	      }
-	    return open.apply(this, args);
-	  };
-	})();
- */   
-   
- //     function init() {
-/*    	
-    	//BASEMAP
-  	var map = L.map('map').setView([60.1708, 24.9375], 13);
-  	var layers = document.getElementById('menu-ui');
-  	
-  	var basemap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicGVzb25ldDEiLCJhIjoiY2lqNXJua2k5MDAwaDI3bTNmaGZqc2ZuaSJ9.nmLkOlsQKzwMir9DfmCNPg', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-		id: 'mapbox.streets'
-	}).addTo(map);
-*/
-	
-	var map = L.map('map').setView([60.18199466214881, 24.9424015570944], 13);
-	
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
-			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-			id: 'mapbox.light'
-		}).addTo(map);
-	
-	/*
-	var map = new L.map('map', {
-    layers: [
-        new L.TileLayer(
-            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        #header {
+            background-image: url("dark.png");
+            color: transparent;
+            text-align: center;
+            font-family: "Lucida Sans Unicode", Lucida Grande, sans-serif;
+            position: absolute;
+            z-index: 50;
+            right: 0;
+            left: 0;
+            top: 0;
+        }
+
+        /*#footer {
+            background-color: #FF6600;
+            color: black;
+            clear: both;
+            text-align: left;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        */
+        #map {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+        }
+
+        
+
+        a:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        a:hover {
+            color: black;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+        a:active {
+            color: black;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+
+
+
+        /* this messes up something
+        .ol-toggle-options a {
+                background: rgba(255,255,255,0.5);
+                color: white;
+                display: block;
+                font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
+                font-size: 19px;
+                font-weight: bold;
+                height: 18px;
+                line-height: 11px;
+                margin: 1px;
+                padding: 0;
+                text-align: center;
+                text-decoration: none;
+                width: 55px;
+                border-radius: 2px;
+              }
+              .ol-toggle-options a:hover {
+                color: #fff;
+                text-decoration: none;
+                background: rgba(0,60,136,0.7);
+              } */
+
+        .sidebar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            bottom: 150;
+            overflow-x: auto;
+            background-color: #1d879f;
+            font-family: "Lucida Sans Unicode", Lucida Grande, sans-serif;
+            margin: 0;
+            padding: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 80;
+        }
+
+        /* Styles used by the default GetFeatureInfo output, added to make IE happy */
+        table.featureInfo, table.featureInfo td, table.featureInfo th {
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            font-size: 90%;
+            padding: .2em .1em;
+        }
+
+            table.featureInfo th {
+                padding: .2em .2em;
+                font-weight: bold;
+                background: #eee;
             }
-        )
-    ]
-});
 
-map.setView([52.5, -1.8], 6);
-	*/
-	// -- Load GB disticts as a WMS layer --
-/*
-var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/service/wms?', {
-    layers: 'osgb:district_borough_unitary_region',
-    tiled: true,
-    format: 'image/png',
-    transparent: true,
-    maxZoom: 14,
-    minZoom: 0,
-    continuousWorld: true
-}).addTo(map);
-	
-      }
- */     
- 	function onEachFeature(feature, layer) {
-			var popupContent = "<p>I started out as a GeoJSON " +
-					feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
+            table.featureInfo td {
+                background: #fff;
+            }
 
-			if (feature.properties && feature.properties.popupContent) {
-				popupContent += feature.properties.popupContent;
-			}
+            table.featureInfo tr.odd td {
+                background: #eee;
+            }
 
-			layer.bindPopup(popupContent);
-		}
+            table.featureInfo caption {
+                text-align: left;
+                font-size: 100%;
+                font-weight: bold;
+                padding: .2em .2em;
+            }
 
- 
-      
-      //mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FicmllbGFhZGFtY3p5ayIsImEiOiJjaWpldzV6ZncwMDA1dnhtNG56OGdhc2FvIn0.jW6mw1QLlMkBLgpAH0NXqA';
-      //"https://api.mapbox.com/v4/keskitj3.b8xaus7m/features.json?access_token=pk.eyJ1Ijoia2Vza2l0ajMiLCJhIjoiY2lrY2t5d3BvMDA0MHZ0bHllcmk0b3ExayJ9.XyxPMcKt4EtXDHUV00RbPA"//"https://webmapproject.github.io/Leaflet/buildings.json"//buildings.json//
+        /* erikokoisten nayttojen erot */
 
-<!-- Adding layer -->
+        /* pieni naytto */
+        @media screen and (max-width:549px) {
+            h1 {
+                font-size: 24px;
+            }
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox://gabrielaadamczyk.dui0bi44',
-    accessToken: 'pk.eyJ1IjoiZ2FicmllbGFhZGFtY3p5ayIsImEiOiJjaWpldzV6ZncwMDA1dnhtNG56OGdhc2FvIn0.jW6mw1QLlMkBLgpAH0NXqA';
-}).addTo(map);
+            .ol-toggle-options {
+                z-index: 1000;
+                position: absolute;
+                right: 7px;
+                bottom: 3px;
+            }
+            /* .btn{padding:5px 11px;} */
+            div span:last-of-type {
+                display: block;
+            }
+        }
+
+        /* keskikokoinen naytto */
+        @media screen and (min-width: 550px) and (max-width:800px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            .ol-toggle-options {
+                z-index: 1000;
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+        /* iso naytto */
+        @media screen and (min-width: 801px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .ol-toggle-options {
+                z-index: 1000;
+                position: absolute;
+                right: 10px;
+                bottom: 15px;
+            }
+        }
+
+        #slider {
+            height: 20px;
+            margin: 0 auto 30px;
+            width: 500px;
+        }
+
+        #beginYear span {
+            color: white;
+        }
+
+        #beginSpan {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        #endYear span {
+            color: white;
+        }
+
+        #endSpan {
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body onload="init()">
+
+    <!-- google scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&amp;libraries=visualization&amp;sensor=false"></script>
+
+    <!-- Function scripts -->
+    <script src="nouislider.min.js"></script>
+    <script type="text/javascript">
 
 
-/*		layer = map.on('style.load', function () {
-			map.addSource('buildings', {
-				type: 'vector',
-				url: 'mapbox://gabrielaadamczyk.dui0bi44'
-			});
-			map.addLayer({
-				'id': 'buildings',
-				"interactive": true,
-				'type': 'fill',
-				'source': 'buildings',
-	//"Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1]// + " AND 'Käyttötarkoitus 1' IN (" + rakennustyyppi + ")"			
-				"filter": ["Year_of_co < 2000"],//["==", "Year_of_co", 2000],
-				'paint': {
-					"fill-color": "#d44242"
-				},
-				'source-layer': 'buildings'
-			});
-
-		}).addTo(map);//;
-*/		
-		//addLayer('Buildings', 'buildings');	
 
 
+        var googlemap;
+        var sliderSet;
+        var mapType;
+        var mapOptions;
+        var rakennustyyppi;
 
-/*
-      L.geoJson(building, {
 
-			style:  {
-            weight: 2,
-            color: "#999",
-            opacity: 1,
-            fillColor: "#B0DE5C",
-            fillOpacity: 0.8
-        }, 
-*/
-        /* function (feature) {
-				return feature.properties && feature.properties.style;
-			},
-*/
-//			onEachFeature: onEachFeature,
+        function initialize() {
+            var latSet = new google.maps.LatLng(60.18199466214881, 24.9424015570944);
+            //mapType = google.maps.MapTypeId.SATELLITE;
 
-/*			pointToLayer: function (feature, latlng) {
-				return L.circleMarker(latlng, {
-					radius: 8,
-					fillColor: "#ff7800",
-					color: "#000",
-					weight: 1,
-					opacity: 1,
-					fillOpacity: 0.8
-				});
-			}
-*/
-//		}).addTo(map);
-    
-      //var rak_wfs = "http://kartta.hel.fi/ws/geoserver/avoindata/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=avoindata:Rakennukset&SRSNAME=EPSG:3879"
-/*      
-       var filter = null;
-  var fillcolor = null;
-*/  
-/*  
-    function popUp(feature, layer) {
-    layer.bindPopup(feature.properties.name);
-  }
-  
-  var geojsonLayer = new L.GeoJSON.AJAX("./buildings.json", { onEachFeature:popUp});
-  geojsonLayer.addTo(map);
-*/
-
-/*  
-  //Taman funktion avulla uusi karttataso voidaan kutsua kayttaen haluttua filteria ja tason varia
-  //function update_layer() {
-    var Buildings = $.ajax({
-      url: buildings,
-      type: 'GET',
-      //datatype:"json",
-      //jsonCallback: 'getJson',
-      success: function(response) {
-        Buildings = L.geoJson(response, {
- */         
-          /*style: function (feature) {
-            var fillColor, 
-            kaytto = feature.properties.kayttotarkoitus;
-            
-            if ( kaytto == filter ) fillColor = fillcolor;
-            
-            return {
-      	      color: "black", 
-      	      weight: 1, 
-      	      fillColor: fillColor, 
-      	      fillOpacity: 0.8 
+            mapOptions = {
+                center: latSet,
+                zoom: 13,
+                styles: [{ "featureType": "all", "elementType": "geometry", "stylers": [{ "visibility": "on" }] }, { "featureType": "all", "elementType": "labels.text", "stylers": [{ "visibility": "off" }] }, { "featureType": "all", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.locality", "elementType": "labels.text", "stylers": [{ "visibility": "off" }, { "weight": "0.01" }] }, { "featureType": "administrative.neighborhood", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }] }, { "featureType": "administrative.neighborhood", "elementType": "geometry.stroke", "stylers": [{ "visibility": "on" }] }, { "featureType": "administrative.neighborhood", "elementType": "labels", "stylers": [{ "visibility": "simplified" }, { "color": "#272020" }] }, { "featureType": "administrative.neighborhood", "elementType": "labels.text", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.neighborhood", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "color": "#1d879f" }, { "saturation": "-30" }, { "lightness": "30" }] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "color": "#1d879f" }, { "lightness": "30" }, { "saturation": "-30" }] }, { "featureType": "poi.attraction", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.attraction", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "poi.business", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "elementType": "all", "stylers": [{ "color": "#1d879f" }] }, { "featureType": "road.highway.controlled_access", "elementType": "geometry.fill", "stylers": [{ "visibility": "off" }] }, { "featureType": "road.highway.controlled_access", "elementType": "geometry.stroke", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "all", "stylers": [{ "color": "#1d879f" }, { "saturation": "-30" }, { "lightness": "35" }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "visibility": "on" }] }, { "featureType": "water", "elementType": "geometry.fill", "stylers": [{ "color": "#1d879f" }] }]
             };
+            rakennustyyppi = 100;
+            update(13, latSet, 'custom');
+            setBoarders();
+        }
+        function update(currentView, centercoords, maptype) {
+            google.maps.visualRefresh = true;
+            var legendDiv = $('#googft-legend');
+            legendDiv.visibility = 'true';
+            var isMobile = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ||
+              (navigator.userAgent.match(/(iPod|iPhone|iPad|BlackBerry|Windows Phone|iemobile)/));
+
+            if (isMobile) {
+                var viewport = document.querySelector("meta[name=viewport]");
+                viewport.setAttribute('content', 'initial-scale=1.0, user-scalable=no');
+            }
+
+            var mapDiv = document.getElementById('googft-mapCanvas');
+            mapDiv.style.width = isMobile ? '100%' : '100%';
+            mapDiv.style.height = isMobile ? '100%' : '100%';
+            if (maptype != 'custom') {
+                mapOptions = {
+                    center: centercoords,
+                    zoom: currentView,
+                    mapTypeId: maptype
+                };
+            }
+
+            var map = new google.maps.Map(mapDiv, mapOptions);
+            googlemap = map;
+            //map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('googft-legend-open'));
+            //map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('googft-legend'));
+
+            map.setZoom(currentView);
+
+            var t = slider.noUiSlider.get();
+
+            layer = new google.maps.FusionTablesLayer({
+                map: map,
+                heatmap: { enabled: false },
+                query: {
+                    select: "col21",
+                    from: "1Cjp5kwTFW1zb7rCRILUg6PryPwo_9RkkM4kD960",
+                    where: "Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1] //+ " AND     'Käyttötarkoitus 1' = " + rakennustyyppi
+                },
+                options: {
+                    styleId: 1,
+                    templateId: 2
+                }
+            });
+
+            if (isMobile) {
+                var legend = document.getElementById('googft-legend');
+                var legendOpenButton = document.getElementById('googft-legend-open');
+                var legendCloseButton = document.getElementById('googft-legend-close');
+                legend.style.display = 'none';
+                legendOpenButton.style.display = 'block';
+                legendCloseButton.style.display = 'block';
+                legendOpenButton.onclick = function () {
+                    legend.style.display = 'block';
+                    legendOpenButton.style.display = 'none';
+                }
+                legendCloseButton.onclick = function () {
+                    legend.style.display = 'none';
+                    legendOpenButton.style.display = 'block';
+                }
+            }
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+        $(document).ready(function () {
+            var slider = document.getElementById('slider');
+
+            sliderSet = noUiSlider.create(slider, {
+                start: [1700, 2013], // Handle start position
+                //step: 10, // Slider moves in increments of '10'
+                margin: 1, // Handles must be more than '20' apart
+                connect: true, // Display a colored bar between the handles
+                direction: 'ltr', // Put '0' at the bottom of the slider
+                orientation: 'horizontal', // Orient the slider vertically
+                behaviour: 'tap-drag', // Move handle on tap, bar is draggable
+                range: { // Slider can select '0' to '100'
+                    'min': 1700,
+                    'max': 2013
+                },
+                pips: { // Show a scale with the slider
+                    mode: 'steps',
+                    density: 2
+                }
+            });
+            //slider.noUiSlider.on('end', function () {
+            //    var zoomi = googlemap.getZoom();
+            //    var centercoords = googlemap.getCenter();
+
+            //    update(zoomi, centercoords, mapType);
+            //});
+
+            slider.noUiSlider.on('change', function () {
+                var zoomi = googlemap.getZoom();
+                var centercoords = googlemap.getCenter();
+
+                update(zoomi, centercoords, mapType);
+            });
+
+            slider.noUiSlider.on('update', function () {
+                setDownBoarderhover();
+                setTopBoarderhover();
+            });
             
-          },*/
-//          	color: 'black'
-          /*filter: function(feature, layer) {return (feature.properties.kayttotarkoitus == filter);},
-          onEachFeature: onEachFeature_viheralueet
-            */
-/*        }).addTo(map);
-      }
-    });
- */     
-      
-      
-      
-    </script>
-  </head>  
-    
-<!--  <body onload="init()">  -->
-    
+            var t = sliderSet.get();
+            document.getElementById('nodelist').innerHTML = "vaihto" + t
 
-    
-    <!-- Sivupalkin piilotus -->
+        });
+
+        function setDownBoarderhover() {
+            $('.noUi-handle-lower').children().remove('div');
+            var t = sliderSet.get();
+            
+            document.getElementById('nodelist').innerHTML = "jotain" + t//'<iframe seamless src="' + t + '"></iframe>';
+            
+            $('.noUi-handle-lower').append('<div id="beginYear"><br/><br/><span id="beginSpan">' + Math.round(t[0]) + '</span></div>');
+        }
+        function setTopBoarderhover() {
+            $('.noUi-handle-upper').children().remove('div');
+            var t = sliderSet.get();
+            $('.noUi-handle-upper').append('<div id="endYear"><br/><br/><span id="endSpan">' + Math.round(t[1]) + '</span></div>');
+        }
+
+        function setBoarders() {
+            setDownBoarderhover();
+            setTopBoarderhover();
+        }
+        function handleChange(arvo) {
+            var zoomi = googlemap.getZoom();
+            var centercoords = googlemap.getCenter();
+            if (arvo == 0) {
+                mapType = google.maps.MapTypeId.SATELLITE;
+                update(zoomi, centercoords, mapType);
+            }
+            if (arvo == 1) {
+                mapType = google.maps.MapTypeId.ROADMAP;
+                update(zoomi, centercoords, mapType);
+            }
+            if (arvo == 2) {
+                mapType = google.maps.MapTypeId.HYBRID;
+                update(zoomi, centercoords, mapType);
+            }
+            if (arvo == 3) {
+                mapType = google.maps.MapTypeId.TERRAIN;
+                update(zoomi, centercoords, mapType);
+            }
+            if (arvo == 4) {
+                mapOptions = {
+                    center: centercoords,
+                    zoom: zoomi,
+                    styles: [{ "featureType": "all", "elementType": "labels.text.fill", "stylers": [{ "saturation": 36 }, { "color": "#000000" }, { "lightness": 40 }] }, { "featureType": "all", "elementType": "labels.text.stroke", "stylers": [{ "visibility": "off" }, { "color": "#000000" }, { "lightness": 16 }] }, { "featureType": "all", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "color": "#000000" }, { "lightness": 20 }] }, { "featureType": "poi", "elementType": "geometry", "stylers": [{ "color": "#000000" }, { "lightness": 21 }] }, { "featureType": "road.highway", "elementType": "geometry.fill", "stylers": [{ "color": "#000000" }, { "lightness": 17 }] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [{ "color": "#000000" }, { "lightness": 29 }, { "weight": 0.2 }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "color": "#000000" }, { "lightness": 18 }] }, { "featureType": "road.local", "elementType": "geometry", "stylers": [{ "color": "#000000" }, { "lightness": 16 }] }, { "featureType": "transit", "elementType": "geometry", "stylers": [{ "color": "#000000" }, { "lightness": 19 }] }, { "featureType": "water", "elementType": "geometry", "stylers": [{ "color": "#0f252e" }, { "lightness": 17 }] }]
+                };
+                mapType = 'custom';
+                update(zoomi, centercoords, 'custom');
+            }
+            if (arvo == 5) {
+                mapOptions = {
+                    center: centercoords,
+                    zoom: zoomi,
+                    styles: [{"featureType":"all","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"all","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.text","stylers":[{"visibility":"off"},{"weight":"0.01"}]},{"featureType":"administrative.neighborhood","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"administrative.neighborhood","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"administrative.neighborhood","elementType":"labels","stylers":[{"visibility":"simplified"},{"color":"#272020"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"administrative.neighborhood","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#1d879f"},{"saturation":"-30"},{"lightness":"30"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#1d879f"},{"lightness":"30"},{"saturation":"-30"}]},{"featureType":"poi.attraction","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.attraction","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"color":"#1d879f"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"color":"#1d879f"},{"saturation":"-30"},{"lightness":"35"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#1d879f"}]}]
+                };
+                mapType = 'custom';
+                update(zoomi, centercoords, 'custom');
+            }
+            if (arvo == 6) {
+                mapOptions = {
+                    center: centercoords,
+                    zoom: zoomi,
+                    styles: [{"featureType":"all","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"color":"#dd1f1f"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"visibility":"off"},{"saturation":"-26"},{"lightness":"19"}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"weight":"2.75"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.landcover","elementType":"all","stylers":[{"color":"#ba3737"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"},{"lightness":"80"},{"color":"#d9d9d9"}]},{"featureType":"road.highway.controlled_access","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"saturation":-100},{"lightness":30}]},{"featureType":"road.local","elementType":"all","stylers":[{"visibility":"off"},{"color":"#f0f0f0"}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"gamma":"2.02"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":"-100"},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"all","stylers":[{"visibility":"simplified"},{"color":"#cecece"}]},{"featureType":"transit.line","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry","stylers":[{"lightness":"3"},{"saturation":-97},{"visibility":"simplified"},{"color":"#d6d6d6"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"off"},{"lightness":-25},{"saturation":-100},{"hue":"#fdff00"}]}]
+                };
+                mapType = 'custom';
+                update(zoomi, centercoords, 'custom');
+            }
+
+        }
+    </script>
+
+    <!-- Hiding the side panel -->
     <script>
-      function toggleControlPanel(){
-        var sidebar = document.getElementById("sidebar");
-        if (sidebar.style.display == "none") {
-          sidebar.style.display = "block";
+        function toggleControlPanel() {
+            var sidebar = document.getElementById("sidebar");
+            if (sidebar.style.display == "none") {
+                sidebar.style.display = "block";
+            }
+            else {
+                sidebar.style.display = "none";
+            }
         }
-        else {
-          sidebar.style.display = "none";
-        }
-      }
     </script>
-    
-     <!-- Header osio, johon tulee otsikko ja ehka joki valikko -->
-    <div class="container-fluid">
-    <div id="header">
-        <h1><span>Helsinki Building years</span></h1>
-       
-      <div class="ol-toggle-options">  
-     <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Menu</button>   
-        </div>
-        <div id="slider">
 
+    <div id="googft-mapCanvas"></div>
+    
+
+   <!--     Legend from fusion tables
+
+    <input id="googft-legend-open" style="display:none" type="button" value="Legend"/>
+    <div id="googft-legend">
+        <p id="googft-legend-title">Building year</p>
+        <div>
+            <span class="googft-legend-swatch"
+                  style="background-color: #ff0000"></span>
+            <span class="googft-legend-range">1700 to 1930</span>
         </div>
         <div>
-
+            <span class="googft-legend-swatch"
+                  style="background-color: #783f04"></span>
+            <span class="googft-legend-range">1930 to 1950</span>
         </div>
-        <div style="height:20px;">
-
+        <div>
+            <span class="googft-legend-swatch"
+                  style="background-color: #ff9900"></span>
+            <span class="googft-legend-range">1950 to 1960</span>
         </div>
-  </div>
- 
-  <div id='sidebar' class='sidebar' style="display: none;"
-  >
-            
-      <button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Hide menu</button>   
-
-       <div style="text-align: left; margin-left:1%;">
-               <form>
-          <input type="radio" name="rbtnlist_maptype" value="1" checked="true" onchange="handleChange(1);"/>Road map<br />
-          <input type="radio" name="rbtnlist_maptype" value="0" onchange="handleChange(0);" />Satellite<br />
-          <input type="radio" name="rbtnlist_maptype" value="2" onchange="handleChange(2);" />Hybrid<br />
-          <input type="radio" name="rbtnlist_maptype" value="3" onchange="handleChange(3);" />Terrain<br />
-        </form></div>
-  <br><br>
-  
-  <!-- Lisaa kartan halutulla koolla -->
-    <div class="container-fluid">
-  <div id="map">
+        <div>
+            <span class="googft-legend-swatch"
+                  style="background-color: #00ff00"></span>
+            <span class="googft-legend-range">1960 to 1970</span>
+        </div>
+        <div>
+            <span class="googft-legend-swatch"
+                  style="background-color: #6fa8dc"></span>
+            <span class="googft-legend-range">1970 to 1980</span>
+        </div>
+        <div>
+            <span class="googft-legend-swatch"
+                  style="background-color: #0b5394"></span>
+            <span class="googft-legend-range">1980 to 1990</span>
+        </div>
+        <div>
+            <span class="googft-legend-swatch"
+                  style="background-color: #351c75"></span>
+            <span class="googft-legend-range">1990 to 2000</span>
+        </div>
+        <div>
+            <span class="googft-legend-swatch"
+                  style="background-color: #4c1130"></span>
+            <span class="googft-legend-range">2000 to 2013</span>
+        </div>
+        <div class="googft-legend-source">
+            <a href="http://www.google.com/fusiontables/DataSource?docid=1Cjp5kwTFW1zb7rCRILUg6PryPwo_9RkkM4kD960" target="_blank"></a>
+        </div>
+        <input id="googft-legend-close" style="display:none" type="button" value="Hide"/>
     </div>
-    
-  </body>
+    -->
+
+    <!-- Header  -->
+    <div class="container-fluid">
+        <div id="header">
+            <h2><span>History of Helsinki</span></h2>
+
+            <div class="ol-toggle-options">
+                <button class="btn btn-primary" title="Sivupalkki" onclick="toggleControlPanel()" href="#toggle">Menu</button>
+
+            </div>
+            <div id="slider">
+            </div>
+            <div style="height:20px;">
+
+
+            <div class="btn-group">
+              <button class="btn btn-primary">Building types</button>
+              <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><input type="checkbox"-<label for="ID">Label</label></li>
+                  <li><a href="#">HTML</a></li>
+                  <li><a href="#">CSS</a></li>
+                  <li><a href="#">JavaScript</a></li>
+                  <!-- Other items -->
+                </ul>
+            </div>
+
+            
+            </div>
+        </div>
+
+        <div id='sidebar' class='sidebar' style="display: none;">
+
+            <button class="btn btn-primary" title="Sivupalkki" onclick="toggleControlPanel()" href="#toggle">Hide menu</button>
+            <div style="text-align: left; margin-left:1%;">
+                <form>
+                    <h4> Select basemap: </h4>
+                    <input type="radio" name="rbtnlist_maptype" value="3" checked="checked" onchange="handleChange(5);" />Blue<br />
+                    <input type="radio" name="rbtnlist_maptype" value="3" onchange="handleChange(4);" />Dark<br />
+                    <input type="radio" name="rbtnlist_maptype" value="3" onchange="handleChange(6);" />Light<br />
+                    <input type="radio" name="rbtnlist_maptype" value="0" onchange="handleChange(0);" />Satellite<br />
+                    <input type="radio" name="rbtnlist_maptype" value="1" onchange="handleChange(1);" />Road map<br />
+                    <input type="radio" name="rbtnlist_maptype" value="2" onchange="handleChange(2);" />Hybrid<br />
+                    <input type="radio" name="rbtnlist_maptype" value="3" onchange="handleChange(3);" />Terrain<br />
+                    <br>
+                    <br>
+                    <h4><link> Helsinki building data: </link> </h4>
+                    <a href="http://www.hri.fi/fi/data/helsingin-kaupungin-rakennusrekisterin-ote-62012/">Helsingin kaupungin rakennusrekisterin ote 6/2012 </a>
+                    <br>
+                    <div id="nodelist">
+        		        <em>Click on the map to get feature info</em>
+    		        </div>
+                    <br>
+                    <h4> Developer team: </h4>
+                    Miska Kauppinen<br />
+                    Gabriela Adamczyk<br />
+                    Juhani Keskitalo<br />
+                    
+                    
+
+                </form>
+            </div>
+           
+       
+            
+
+                <!-- possible footer -->
+                <!--    <div class="container-fluid">
+                  <div id="footer">
+                        <p> Web Map Project</p>
+                  </div>
+                    </div>
+                -->
+</body>
 </html>
