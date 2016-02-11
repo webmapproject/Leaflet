@@ -280,6 +280,33 @@
 	});
 	mapType = 'custom';
 	
+	/*<!-- Adding layer -->*/
+		layer = map.on('style.load', function () {
+			map.addSource('buildings', {
+				type: 'vector',
+				url: 'mapbox://gabrielaadamczyk.dui0bi44'
+			});
+			map.addLayer({
+				'id': 'buildings',
+				"interactive": true,
+				'type': 'fill',
+				'source': 'buildings',
+				//'filter': ["all", [">=","Year_of_co", 1700], ["<=","Year_of_co", 2000]],
+				
+				//'filter': ["all", [">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]]],
+//["==", "Year_of_co", 2000],
+//"Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1]// + " AND 'Käyttötarkoitus 1' IN (" + rakennustyyppi + ")"			
+
+				'paint': {
+					"fill-color": "#d44242"
+				},
+				'source-layer': 'buildings'
+			});
+
+		});
+		
+		addLayer('Buildings', 'buildings');
+	
 // 	function update(currentView, centercoords, maptype) {
 
 //	layer.setFilter(function(f) {
@@ -485,32 +512,7 @@ $("#slider").click(function (event) {
 
 
 
-/*<!-- Adding layer -->*/
-		layer = map.on('style.load', function () {
-			map.addSource('buildings', {
-				type: 'vector',
-				url: 'mapbox://gabrielaadamczyk.dui0bi44'
-			});
-			map.addLayer({
-				'id': 'buildings',
-				"interactive": true,
-				'type': 'fill',
-				'source': 'buildings',
-				//'filter': ["all", [">=","Year_of_co", 1700], ["<=","Year_of_co", 2000]],
-				
-				'filter': ["all", [">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]]],
-//["==", "Year_of_co", 2000],
-//"Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1]// + " AND 'Käyttötarkoitus 1' IN (" + rakennustyyppi + ")"			
-
-				'paint': {
-					"fill-color": "#d44242"
-				},
-				'source-layer': 'buildings'
-			});
-
-		});
-		
-		addLayer('Buildings', 'buildings');	
+	
 
 /*
 
