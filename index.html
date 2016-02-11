@@ -308,9 +308,9 @@
 		
 		addLayer('Buildings', 'buildings');
 	
- 	function update(t) {
-		var t = t
-		document.getElementById('nodelist').innerHTML = "filtteröinnissä vikkaa" + t[0] + t[1]//'<iframe seamless src="' + t + '"></iframe>';
+ 	function update(tvar) {
+		var t = tvar
+		//document.getElementById('nodelist').innerHTML = "filtteröinnissä vikkaa" + t[0] + t[1]//'<iframe seamless src="' + t + '"></iframe>';
 
 		//setFilter(layer, [">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]])
 		map.setFilter("all", [">=","Year_of_co", 1700], ["<=","Year_of_co", 1950])//layer.setFilter(function() { return false; })
@@ -462,7 +462,7 @@ $("#slider").click(function (event) {
             var zoomi = map.getZoom();
             var centercoords = map.getCenter();
             var t = sliderSet.get();
-	    //update(t);
+	    update(t);
             if (mapType == 'custom') {
                 mapOptions = {
                     center: centercoords,
