@@ -331,8 +331,9 @@
 	//Here comes the setFilter-function... the upper shows just the sliders values in the sidebar
 		//setFilter("all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
 		//setFilter("buildings", [[">=","Year_of_co", 1700], ["<=","Year_of_co", 1950]])//layer.setFilter(function() { return false; })
-		var x = map.getFilter('buildings', 'filter')
+		var x = map.getFilter('buildings')//, 'filter')
 		document.getElementById('nodelist').innerHTML += x
+		
 	//	map.buildings.setFilter(function (f) {
 	//		return f.properties['Year_of_co' ] >= ty[0] || f.properties['Year_of_co' ] <= ty[1]
 	//	});
