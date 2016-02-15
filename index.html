@@ -282,7 +282,8 @@
 	mapType = 'custom';
 	
 	/*<!-- Adding layer -->*/
-/*		L.mapbox.layer = map.on('style.load', function () {
+		//L.mapbox.layer 
+		buildings = map.on('style.load', function () {
 			map.addSource('buildings', {
 				type: 'vector',
 				url: 'mapbox://gabrielaadamczyk.dui0bi44'
@@ -307,11 +308,11 @@
 		});
 		
 		addLayer('buildings', 'buildings');
-Toimiva rakennusten lisääminen*/
-		var featureLayer = L.mapbox.featureLayer("mapbox://gabrielaadamczyk.dui0bi44")
+
+/*		var featureLayer = L.mapbox.featureLayer("mapbox://gabrielaadamczyk.dui0bi44")
   			.loadURL('mapbox://gabrielaadamczyk.dui0bi44')
   			.addTo(map)
-  			/*.setFilter(
+ */ 			/*.setFilter(
 	    			function (feature) {
 	      				//$("input[type='checkbox']").click(function() {
 	        			if ($("#blue").prop("checked")) {
