@@ -315,7 +315,7 @@
 		//setFilter("all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
 		//setFilter("buildings", [[">=","Year_of_co", 1700], ["<=","Year_of_co", 1950]])//layer.setFilter(function() { return false; })
 		//layer.addTo(map);
-		map.layer.setFilter(function (f) {
+		map.buildings.setFilter(function (f) {
 			return f.properties['Year_of_co' ] >= ty[0] || f.properties['Year_of_co' ] <= ty[1]
 		});
 		//"all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
