@@ -334,7 +334,8 @@
 		var x = map.getFilter('buildings')//, 'filter')
 		document.getElementById('nodelist').innerHTML += x
 		var b = parseFloat("1999.2")
-		map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", 2013]])
+		var c = parseFloat(ty[1])
+		map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
 		
 	//	map.buildings.setFilter(function (f) {
 	//		return f.properties['Year_of_co' ] >= ty[0] || f.properties['Year_of_co' ] <= ty[1]
