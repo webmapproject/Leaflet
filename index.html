@@ -282,7 +282,7 @@
 	mapType = 'custom';
 	
 	/*<!-- Adding layer -->*/
-		L.mapbox.layer = map.on('style.load', function () {
+/*		L.mapbox.layer = map.on('style.load', function () {
 			map.addSource('buildings', {
 				type: 'vector',
 				url: 'mapbox://gabrielaadamczyk.dui0bi44'
@@ -307,7 +307,23 @@
 		});
 		
 		addLayer('buildings', 'buildings');
-	
+Toimiva rakennusten lisääminen*/
+		var featureLayer = L.mapbox.featureLayer()
+  			.loadURL('mapbox://gabrielaadamczyk.dui0bi44')
+  			.addTo(map)
+  			/*.setFilter(
+	    			function (feature) {
+	      				//$("input[type='checkbox']").click(function() {
+	        			if ($("#blue").prop("checked")) {
+	        				return (feature.properties["marker-color"] === "#3b5998");
+	        			} else {
+	          				return false;
+	        			}
+	      //});
+	    			}
+  			);*/
+
+
  	function update(tvar) {
 		var ty = tvar
 		document.getElementById('nodelist').innerHTML = "here are the ty values: " + ty[0] +", " + ty[1]//'<iframe seamless src="' + t + '"></iframe>';
@@ -315,7 +331,7 @@
 		//setFilter("all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
 		//setFilter("buildings", [[">=","Year_of_co", 1700], ["<=","Year_of_co", 1950]])//layer.setFilter(function() { return false; })
 		//layer.addTo(map);
-		buildings.setFilter(function (f) {
+		map.buildings.setFilter(function (f) {
 			return f.properties['Year_of_co' ] >= ty[0] || f.properties['Year_of_co' ] <= ty[1]
 		});
 		//"all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
