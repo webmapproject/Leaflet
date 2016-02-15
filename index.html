@@ -283,7 +283,7 @@
 	
 	/*<!-- Adding layer -->*/
 		//L.mapbox.layer 
-		var buildings = map.on('style.load', function () {
+/*		var buildings = map.on('style.load', function () {
 			map.addSource('buildings', {
 				type: 'vector',
 				url: 'mapbox://gabrielaadamczyk.dui0bi44'
@@ -308,11 +308,11 @@
 		});
 		
 		addLayer('buildings');//, 'buildings');
-
-/*		var featureLayer = L.mapbox.featureLayer("mapbox://gabrielaadamczyk.dui0bi44")
-  			.loadURL('mapbox://gabrielaadamczyk.dui0bi44')
-  			.addTo(map)
- */ 			/*.setFilter(
+*/
+		var featureLayer = L.mapbox.featureLayer().loadURL('mapbox://gabrielaadamczyk.dui0bi44').addTo(map)
+  //			.loadURL('mapbox://gabrielaadamczyk.dui0bi44')
+  //			.addTo(map)
+ 			/*.setFilter(
 	    			function (feature) {
 	      				//$("input[type='checkbox']").click(function() {
 	        			if ($("#blue").prop("checked")) {
@@ -332,8 +332,7 @@
 		//setFilter("all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
 		//setFilter("buildings", [[">=","Year_of_co", 1700], ["<=","Year_of_co", 1950]])//layer.setFilter(function() { return false; })
 		//layer.addTo(map);
-		//map.
-		buildings.setFilter(function (f) {
+		map.buildings.setFilter(function (f) {
 			return f.properties['Year_of_co' ] >= ty[0] || f.properties['Year_of_co' ] <= ty[1]
 		});
 		//"all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
