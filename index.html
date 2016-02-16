@@ -245,8 +245,8 @@
                     <button data-toggle="dropdown" class="btn btn-primary dropdown">Building types</button>
                     <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
                     <ul class="dropdown-menu" style="padding-left:10px;">
-                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes('A Asuinrakennukset');" />Asuinrakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'B Vapaa-ajan asuinrakennukset\'');" />Vapaa-ajan asuinrakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes();" />Asuinrakennukset</li>
+<!--                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'B Vapaa-ajan asuinrakennukset\'');" />Vapaa-ajan asuinrakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'C Liikerakennukset\'');" />Liikerakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'D Toimistorakennukset\'');" />Toimistorakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'E Liikenteen rakennukset\'');" />Liikenteen rakennukset</li>
@@ -258,7 +258,7 @@
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'L Palo- ja pelastustoimen rakennukset\'');" />Palo- ja pelastustoimen rakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'M Maatalousrakennukset\'');" />Maatalousrakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'N Muut rakennukset\'');" />Muut rakennukset</li>
-                    </ul>
+ -->                   </ul>
                 </div>
                     <br>
                     <br>
@@ -499,7 +499,7 @@ map.on('mousemove', function(e) {
 //		map.addControl(new mapboxgl.Geocoder());
 
 //}
-    function handleBuildingtypes(value) {
+    function handleBuildingtypes() {
 
 	var x = map.getFilter('buildings')
 	document.getElementById('nodelist').innerHTML = "here are the filter values: " + x//'<iframe seamless src="' + t + '"></iframe>';
