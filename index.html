@@ -234,7 +234,28 @@
 				<input id='satellite' type='radio' name='rtoggle' value='satellite'>
 				<label for='satellite'>satellite</label>
 				<br>
-                <br>
+                                    <h4>Select filter:</h4>
+                <div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown">Building types</button>
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
+                    <ul class="dropdown-menu" style="padding-left:10px;">
+                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes(this, '\'A Asuinrakennukset\'');" />Asuinrakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'B Vapaa-ajan asuinrakennukset\'');" />Vapaa-ajan asuinrakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'C Liikerakennukset\'');" />Liikerakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'D Toimistorakennukset\'');" />Toimistorakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'E Liikenteen rakennukset\'');" />Liikenteen rakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'F Hoitoalan rakennukset\'');" />Hoitoalan rakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'G Kokoontumisrakennukset\'');" />Kokoontumisrakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes(this, '\'H Opetusrakennukset\'');" />Opetusrakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'J Teollisuusrakennukset\'');" />Teollisuusrakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'K Varastorakennukset\'');" />Varastorakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'L Palo- ja pelastustoimen rakennukset\'');" />Palo- ja pelastustoimen rakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'M Maatalousrakennukset\'');" />Maatalousrakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, '\'N Muut rakennukset\'');" />Muut rakennukset</li>
+                    </ul>
+                </div>
+                    <br>
+                    <br>
                 <h4><link> Helsinki building data: </link> </h4>
                 <a href="http://www.hri.fi/fi/data/helsingin-kaupungin-rakennusrekisterin-ote-62012/">Helsingin kaupungin rakennusrekisterin ote 6/2012 </a>
                 <br>
@@ -698,6 +719,38 @@ map.on('mousemove', function(e) {
 //		map.addControl(new mapboxgl.Geocoder());
 
 //}
+    function handleBuildingtypes(checkbox, value) {
+
+	var x = map.getFilter('buildings')
+	document.getElementById('nodelist').innerHTML = "here are the filter values: " + x//'<iframe seamless src="' + t + '"></iframe>';
+	map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
+	
+        /*deleteMap();
+        rakennustyyppi.trim();
+        if (checkbox.checked) {
+            if (rakennustyyppi != '') {
+                rakennustyyppi = rakennustyyppi + ', ' + value;
+            }
+            else {
+                rakennustyyppi = rakennustyyppi + value;
+            }
+        }
+        else {
+            rakennustyyppi = rakennustyyppi.replace(', ' + value, value);
+            rakennustyyppi = rakennustyyppi.replace(value, '');
+        }
+
+        if (rakennustyyppi.startsWith(',') || rakennustyyppi.startsWith(' ')) {
+            rakennustyyppi = rakennustyyppi.substr(1);
+        }
+*/        //var zoomi = googlemap.getZoom();
+        //var centercoords = googlemap.getCenter();
+        //updateDataLayer();
+        //update(zoomi, centercoords, mapType);
+    }
+
+
+
 </script>
 <script>
 <!-- Hiding the side panel -->		
