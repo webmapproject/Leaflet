@@ -536,7 +536,8 @@ map.on('mousemove', function(e) {
             rakennustyyppi = rakennustyyppi.substr(1);
         }
         document.getElementById('nodelist').innerHTML += '<br><br>' + rakennustyyppi
-        update();
+        var t = sliderSet.get();
+	update(t);
         //var zoomi = googlemap.getZoom();
         //var centercoords = googlemap.getCenter();
         //updateDataLayer();
