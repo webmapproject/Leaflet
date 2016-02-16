@@ -507,7 +507,7 @@ map.on('mousemove', function(e) {
 
 	var x = map.getFilter('buildings')
 	document.getElementById('nodelist').innerHTML = "here are the filter values: " + x +'<br>' + value//'<iframe seamless src="' + t + '"></iframe>';
-	map.setFilter('buildings', ["all", x])
+	map.setFilter('buildings', [x])
 	
         //deleteMap();
         //rakennustyyppi.trim();
