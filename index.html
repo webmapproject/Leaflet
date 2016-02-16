@@ -347,7 +347,7 @@
 		var c = parseFloat(ty[1])
 		rakennustyyppi = $.trim(rakennustyyppi)
 		
-		rakennustyyppi = rakennustyyppi.split("'")
+		rakennustyyppi = rakennustyyppi.split(",")
 		var x = map.getFilter('buildings')
 		document.getElementById('nodelist').innerHTML = "here are the filter values: " +'<br>' + x +'<br>' + rakennustyyppi
 		
