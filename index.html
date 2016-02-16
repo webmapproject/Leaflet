@@ -223,6 +223,7 @@
 <!-- changing basemap -->	
 		<div id='sidebar' class='sidebar' style="display: none;">
 			<button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Hide menu</button>
+			<div id='baselayer' class='baselayer'>
 			<div style="text-align: left; margin-left:1%;">
 				<h4> Select basemap: </h4>
 				<input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
@@ -239,8 +240,9 @@
 				<label for='dark'>dark</label><br>
 				<input id='satellite' type='radio' name='rtoggle' value='satellite'>
 				<label for='satellite'>satellite</label>
+			</div>
 			</div>	
-			</button>
+
 				<br>
                     <h4>Select filter:</h4>
                 <div class="btn-group">
@@ -452,7 +454,7 @@ map.on('mousemove', function(e) {
 });
 		
 <!-- changing basemap -->	
-		var layerList = document.getElementById('sidebar');
+		var layerList = document.getElementById('baselayer');
 		var inputs = layerList.getElementsByTagName('input');
 
 		function switchLayer(layer) {
