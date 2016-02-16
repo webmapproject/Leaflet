@@ -5,7 +5,7 @@
     <meta name="apple-mobile-web-app-cabaple" content="yes"> 
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     
-	<title>History of Helsinki buildings</title>
+	<title>Evolution of Helsinki</title>
 	
 <!-- Mapbox script -->
 	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.4/mapbox-gl.js'></script>
@@ -34,8 +34,8 @@
 	}
 	
 	#header {
-/*	background-image: url("dark.png");*/
-        background-color:black;
+/*	background-image: url("dark.png");
+        background-color:black;*/
         color: white;
         text-align: center;
         font-family: "Lucida Sans Unicode", Lucida Grande, sans-serif;
@@ -52,47 +52,42 @@
 		position:absolute;
 		left:0;
 	}
-
 	
 	
-    .sidebar {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 250px;
-        bottom: 150;
-        overflow-x: auto;
-        background-color: #1d879f;
-        font-family: "Lucida Sans Unicode", Lucida Grande, sans-serif;
-        margin: 0;
-        padding: 5px;
-        font-size: 14px;
-        font-weight: bold;
-        border-radius: 10px;
-        text-align: center;
-        z-index: 80;
-        height: 650px;
-    }
+        .sidebar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            bottom: 150;
+            overflow-x: auto;
+            background-color: #1d879f;
+            font-family: "Lucida Sans Unicode", Lucida Grande, sans-serif;
+            margin: 0;
+            padding: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 80;
+            height: 650px;
+        }
 		
 	#slider {
-        height: 20px;
+        height: 10px;
         margin: 0 auto 30px;
         width: 500px;
     }
-
     #beginYear span {
         color: white;
         }
-
     #beginSpan {
         font-size: 12px;
         font-weight: bold;
     }
-
     #endYear span {
         color: white;
     }
-
     #endSpan {
         font-size: 12px;
         font-weight: bold;
@@ -110,7 +105,6 @@
         border: 1px solid rgba(0,0,0,0.4);
         font-family: 'Open Sans', sans-serif;
     }
-
     #menu a {
         font-size: 13px;
         color: #404040;
@@ -122,21 +116,17 @@
         border-bottom: 1px solid rgba(0,0,0,0.25);
         text-align: center;
     }
-
     #menu a:last-child {
         border: none;
     }
-
     #menu a:hover {
         background-color: #f8f8f8;
         color: #404040;
     }
-
     #menu a.active {
         background-color: #3887be;
         color: #ffffff;
     }
-
     #menu a.active:hover {
         background: #3074a4;
     }
@@ -146,13 +136,10 @@
             color:black; 
             font-size:10px !important;
         }
-
-
         @media screen and (max-width:549px) {
             h1 {
                 font-size: 24px;
             }
-
             .ol-toggle-options {
                 z-index: 1000;
                 position: absolute;
@@ -164,13 +151,10 @@
                 display: block;
             }
         }
-
-
         @media screen and (min-width: 550px) and (max-width:800px) {
             h1 {
                 font-size: 30px;
             }
-
             .ol-toggle-options {
                 z-index: 1000;
                 position: absolute;
@@ -183,7 +167,6 @@
             h1 {
                 font-size: 36px;
             }
-
             .ol-toggle-options {
                 z-index: 1000;
                 position: absolute;
@@ -195,9 +178,7 @@
 	
 </style>
 </head>
-
 <!--<body onload="init()">-->
-
 <!-- Function scripts -->
 	<script src="nouislider.min.js"></script>
 <!--	<script src="map.js"></script>
@@ -207,11 +188,10 @@
 	<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.1.0/mapbox-gl-geocoder.css' type='text/css' />
 -->
 	<div id='map'></div>
-
 <!-- Header -->
 	<div class="container-fluid">
 		<div id="header">
-				<h2><span>History of Helsinki</span></h2>
+				<h2><span>Evolution of Helsinki</span></h2>
 		   
 			<div class="ol-toggle-options">  
 				<button class="btn btn-primary" title="Sivupalkki" onClick="toggleControlPanel()" href="#toggle">Menu</button>   
@@ -227,43 +207,46 @@
 			<div id='baselayer' class='baselayer'>
 			<div style="text-align: left; margin-left:1%;">
 				<h4> Select basemap: </h4>
-				<input id='basic' type='radio' name='rtoggle' value='basic'>
+				<input id='light' type='radio' name='rtoggle' value='light'>
+				<label for='light'>light</label><br>
+				<input id='satellite' type='radio' name='rtoggle' value='satellite'>
+				<label for='satellite'>satellite</label><br>
+				<input id='dark' type='radio' name='rtoggle' value='dark' checked='checked'>
+				<label for='dark'>dark</label><br>
+				
+			<!--	<input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
 				<label for='basic'>basic</label><br>
-				<input id='streets' type='radio' name='rtoggle' value='streets'>
-				<label for='streets'>streets</label><br>
 				<input id='emerald' type='radio' name='rtoggle' value='emerald'>
 				<label for='emerald'>emerald</label><br>
 				<input id='bright' type='radio' name='rtoggle' value='bright'>
 				<label for='bright'>bright</label><br>
 				<input id='light' type='radio' name='rtoggle' value='light'>
 				<label for='light'>light</label><br>
-				<input id='dark' type='radio' name='rtoggle' value='dark' checked='checked'>
-				<label for='dark'>dark</label><br>
-				<input id='satellite' type='radio' name='rtoggle' value='satellite'>
-				<label for='satellite'>satellite</label>
+				<input id='dark' type='radio' name='rtoggle' value='dark'>
+				<label for='dark'>dark</label><br> -->
 			</div>
 			</div>	
-
+			<div style="text-align: left; margin-left:1%;">
 				<br>
                     <h4>Select filter:</h4>
-                <div class="btn-group">
+                <div class="btn-group" >
                     <button data-toggle="dropdown" class="btn btn-primary dropdown">Building types</button>
                     <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
                     <ul class="dropdown-menu" style="padding-left:10px;">
-                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes(this, 'A Asuinrakennukset');" />Asuinrakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'B Vapaa-ajan asuinrakennukset');" />Vapaa-ajan asuinrakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'C Liikerakennukset');" />Liikerakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'D Toimistorakennukset');" />Toimistorakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'E Liikenteen rakennukset');" />Liikenteen rakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'F Hoitoalan rakennukset');" />Hoitoalan rakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'G Kokoontumisrakennukset');" />Kokoontumisrakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes(this, 'Opetusrakennukset');" />Opetusrakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'J Teollisuusrakennukset');" />Teollisuusrakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'K Varastorakennukset');" />Varastorakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'L Palo- ja pelastustoimen rakennukset');" />Palo- ja pelastustoimen rakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'M Maatalousrakennukset');" />Maatalousrakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'N Muut rakennukset');" />Muut rakennukset</li>
-                    </ul>
+                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes(this, 'residential building');" />residential buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'free-time residence');" />free-time residences</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'commercial building');" />commercial buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'office building');" />office buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'trafficl building');" />trafficl buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'institutional building');" />institutional buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'assembly building');" />assembly buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'educational building');" />educational buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'industrial building');" />industrial buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'storage building');" />storage buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'fire and rescue services building');" />fire and rescue services buildings</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'agricultural building');" />agricultural building</li>
+                        <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'other');" />others</li>
+                     </ul>
                 </div>
                     <br>
                     <br>
@@ -278,8 +261,10 @@
 			</div>
 			
 			<!--to show and hide layer buildings unnecessary???-->
-			<nav id="menu"></nav>		
+		<nav id="menu"></nav>
+	</div>			
 		</div>
+		
 	</div>
 	
 <!-- possible footer -->
@@ -288,11 +273,8 @@
                 <p> Web Map Project</p>
             </div>
         </div> -->
-
-
 		
 <script>
-
 	var map; 
     var sliderSet;
     var mapType;
@@ -302,25 +284,37 @@
     var t;
 	
 //<!-- initializing a map -->
-
 	mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FicmllbGFhZGFtY3p5ayIsImEiOiJjaWpldzV6ZncwMDA1dnhtNG56OGdhc2FvIn0.jW6mw1QLlMkBLgpAH0NXqA';
+
+	// Set bounds to Helsinki
+	var bounds = [
+		[22.959763, 59.645179], // Southwest coordinates
+		[26.322158, 60.762012]  // Northeast coordinates
+	];
+	
 	var map = new mapboxgl.Map({
 	    container: 'map',
 	    
-		style: 'mapbox://styles/mapbox/dark-v8',
-	    zoom: 13,
-	    center: [24.9424015570944, 60.18199466214881],
-	    maxZoom: 16,
-    	    minZoom: 12
+		style: 'mapbox://styles/gabrielaadamczyk/cikgrt0a8000zmtm01pba19cj',
+		<!--'mapbox://styles/mapbox/dark-v8'-->
+		center: [25.046303, 60.231984],
+		zoom: 10.25,
+		maxBounds: bounds
 	});
 	mapType = 'custom';
 	
+// Create a popup, but don't add it to the map yet.
+var popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+});
+
 	/*<!-- Adding layer -->*/
 		//L.mapbox.layer 
 		var buildings = map.on('style.load', function () {
 			map.addSource('buildings', {
 				type: 'vector',
-				url: 'mapbox://gabrielaadamczyk.dui0bi44'
+				url: 'mapbox://gabrielaadamczyk.f58b60d8'
 			});
 			map.addLayer({
 				'id': 'buildings',
@@ -329,16 +323,16 @@
 				'source': 'buildings',
 				'filter': ["all", [">=","Year_of_co", 1700], ["<=","Year_of_co", 2013]],
 				'paint': {
-					"fill-color": "#d44242"
+					"fill-color": '#088',//"#d44242",
+					"fill-opacity": 0.5
 				},
 				'source-layer': 'buildings'
 			});
-
 		});
 		
 		addLayer('Buildings', 'buildings');
-
- 	function update(tvar) {
+ 	
+	function update(tvar) {
 		var ty = tvar
 	//	document.getElementById('nodelist').innerHTML = "here are the ty values: " + ty[0] +", " + ty[1]//'<iframe seamless src="' + t + '"></iframe>';
 	//Here comes the setFilter-function... the upper shows just the sliders values in the sidebar
@@ -360,10 +354,8 @@
 			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c], ["in","Intended_U", rakennustyyp[0],rakennustyyp[1],rakennustyyp[2],rakennustyyp[3],rakennustyyp[4],rakennustyyp[5],rakennustyyp[6],rakennustyyp[7],rakennustyyp[8],rakennustyyp[9],rakennustyyp[10],rakennustyyp[11]]])//'C Liikerakennukset', 'A Asuinrakennukset']])
 		}
         };
-
 	$(document).ready(function () {
         var slider = document.getElementById('slider');
-
         sliderSet = noUiSlider.create(slider, {
             start: [1800, 2013], // Handle start position
             //step: 10, // Slider moves in increments of '10'
@@ -382,7 +374,6 @@
                 density: 2
             }
         });
-
         slider.noUiSlider.on('change', function () {
             var zoomi = map.getZoom();
             var centercoords = map.getCenter();
@@ -396,16 +387,12 @@
                 };
              
             }
-
         });
-
         slider.noUiSlider.on('update', function () {
             setDownBoarderhover();
             setTopBoarderhover();
         });
-
     });
-
     function setDownBoarderhover() {
         $('.noUi-handle-lower').children().remove('div');
         var t = sliderSet.get();
@@ -420,28 +407,54 @@
         var t = sliderSet.get();
         $('.noUi-handle-upper').append('<div id="endYear"><br/><br/><span id="endSpan">' + Math.round(t[1]) + '</span></div>');
     }
-
     function setBoarders() {
         setDownBoarderhover();
         setTopBoarderhover();
     }
 
-// Create a popup, but doesn't add it to the map yet.
-var popup = new mapboxgl.Popup({
-    closeButton: false
-});
-
+	
 // The key name that exists in each polygon properties
 // object we want to display
-var facet = 'Year_of_co';
 
+		
+<!-- changing basemap -->	
+		var layerList = document.getElementById('baselayer');
+		var inputs = layerList.getElementsByTagName('input');
+		function switchLayer(layer) {
+			var layerId = layer.target.id;
+			map.setStyle('mapbox://styles/mapbox/' + layerId + '-v8');
+		}
+		for (var i = 0; i < inputs.length; i++) {
+			inputs[i].onclick = switchLayer;
+		}
+	
+	
+<!--show and hide layer buildings unnecessary???-->		
+		function addLayer(name, id) {
+			var link = document.createElement('a');
+			link.href = '#';
+			link.className = 'active';
+			link.textContent = name;
+			link.onclick = function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+				var visibility = map.getLayoutProperty(id, 'visibility');
+				if (visibility === 'visible') {
+					map.setLayoutProperty(id, 'visibility', 'none');
+					this.className = '';
+				} else {
+					this.className = 'active';
+					map.setLayoutProperty(id, 'visibility', 'visible');
+				}
+			};
+			var layers = document.getElementById('menu');
+			layers.appendChild(link);
+		}
+<!--popups-->
 map.on('mousemove', function(e) {
     map.featuresAt(e.point, {
-
-        // Collect each layer id we created into an array.
-        layer: 'buildings'//layers.map(function(layer, i) {
-            //return 'layer-' + i;
-        //})
+		includeGeometry: true,
+        layer: 'buildings'
     }, function(err, features) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = (!err && features.length) ? 'pointer' : '';
@@ -453,10 +466,10 @@ map.on('mousemove', function(e) {
 
         var details = features[0].properties;
 
-        // Initialize a popup and set its coordinates
+        // Popuplate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(e.lngLat)
-            .setHTML('<b>Year of construction: </b>' + details[facet] + 
+            .setHTML('<b>Year of construction: </b>' + details["Year_of_co"] + 
 						'<br><b>Address: </b>' + details["Address"] + 
 						'<br><b>Type: </b>' + details["Intended_U"] +
 						'<br><b>Facade: </b>' + details["Facade"] +
@@ -466,58 +479,8 @@ map.on('mousemove', function(e) {
     });
 });
 		
-<!-- changing basemap -->	
-		var layerList = document.getElementById('baselayer');
-		var inputs = layerList.getElementsByTagName('input');
-
-		function switchLayer(layer) {
-			var layerId = layer.target.id;
-			map.setStyle('mapbox://styles/mapbox/' + layerId + '-v8');
-		}
-		for (var i = 0; i < inputs.length; i++) {
-			inputs[i].onclick = switchLayer;
-		}
-
-	
-	
-
-<!--show and hide layer buildings unnecessary???-->		
-		function addLayer(name, id) {
-			var link = document.createElement('a');
-			link.href = '#';
-			link.className = 'active';
-			link.textContent = name;
-
-			link.onclick = function (e) {
-				e.preventDefault();
-				e.stopPropagation();
-
-				var visibility = map.getLayoutProperty(id, 'visibility');
-
-				if (visibility === 'visible') {
-					map.setLayoutProperty(id, 'visibility', 'none');
-					this.className = '';
-				} else {
-					this.className = 'active';
-					map.setLayoutProperty(id, 'visibility', 'visible');
-				}
-			};
-
-			var layers = document.getElementById('menu');
-			layers.appendChild(link);
-		}
-		
   
-// Add zoom and rotation controls to the map
-		map.addControl(new mapboxgl.Navigation());		
-		
-
-// Add geocoder			
-//		map.addControl(new mapboxgl.Geocoder());
-
-//}
     function handleBuildingtypes(checkbox, value) {
-
 	var x = map.getFilter('buildings')
 	//document.getElementById('nodelist').innerHTML = "here are the filter values: " + x +'<br>' + value//'<iframe seamless src="' + t + '"></iframe>';
 	//map.setFilter('buildings', [x])
@@ -538,7 +501,6 @@ map.on('mousemove', function(e) {
             rakennustyyppi = rakennustyyppi.replace(',' + value, value);
             rakennustyyppi = rakennustyyppi.replace(value, '');
         }
-
         if (rakennustyyppi.startsWith(',') || rakennustyyppi.startsWith(' ')) {
             rakennustyyppi = rakennustyyppi.substr(1);
         }
@@ -550,9 +512,14 @@ map.on('mousemove', function(e) {
         //updateDataLayer();
         //update(zoomi, centercoords, mapType);
     }
-
-
-
+	
+	// Add zoom and rotation controls to the map
+		map.addControl(new mapboxgl.Navigation({position: 'bottom-left'}));		
+		
+	// Add geocoder			
+	//		map.addControl(new mapboxgl.Geocoder());
+	//}
+	
 </script>
 <script>
 <!-- Hiding the side panel -->		
