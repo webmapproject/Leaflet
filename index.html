@@ -347,7 +347,7 @@
 		var c = parseFloat(ty[1])
 		rakennustyyppi = $.trim(rakennustyyppi)
 		
-		rakennustyyppi = rakennustyyppi.split(",")
+		rakennustyyp = rakennustyyppi.split(",")
 		//var x = map.getFilter('buildings')
 		//document.getElementById('nodelist').innerHTML = "here are the filter values: " +'<br>' + x +'<br>' + rakennustyyppi
 		
@@ -356,7 +356,7 @@
 			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
 		} else {
 			
-			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c], ["in","Intended_U", rakennustyyppi[0],rakennustyyppi[1],rakennustyyppi[2],rakennustyyppi[3],rakennustyyppi[4],rakennustyyppi[5],rakennustyyppi[6],rakennustyyppi[7],rakennustyyppi[8],rakennustyyppi[9],rakennustyyppi[10],rakennustyyppi[11]]])//'C Liikerakennukset', 'A Asuinrakennukset']])
+			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c], ["in","Intended_U", rakennustyyp[0],rakennustyyp[1],rakennustyyp[2],rakennustyyp[3],rakennustyyp[4],rakennustyyp[5],rakennustyyp[6],rakennustyyp[7],rakennustyyp[8],rakennustyyp[9],rakennustyyp[10],rakennustyyp[11]]])//'C Liikerakennukset', 'A Asuinrakennukset']])
 		}
         };
 
