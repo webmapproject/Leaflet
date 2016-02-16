@@ -524,7 +524,7 @@ map.on('mousemove', function(e) {
         rakennustyyppi = $.trim(rakennustyyppi)
         if (checkbox.checked) {
             if (rakennustyyppi != '') {
-                rakennustyyppi = rakennustyyppi + ',' + value;
+                rakennustyyppi = rakennustyyppi + , + value;//'',' + value;
             }
             else {
                 rakennustyyppi = rakennustyyppi + value;
