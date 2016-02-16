@@ -346,6 +346,10 @@
 		var b = parseFloat(ty[0])
 		var c = parseFloat(ty[1])
 		rakennustyyppi = $.trim(rakennustyyppi)
+		
+		var x = map.getFilter('buildings')
+		document.getElementById('nodelist').innerHTML = "here are the filter values: " + x +'<br>' + rakennustyyppi
+		
 		if (rakennustyyppi == "") {
 			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
 		} else {
@@ -512,7 +516,7 @@ map.on('mousemove', function(e) {
     function handleBuildingtypes(checkbox, value) {
 
 	var x = map.getFilter('buildings')
-	document.getElementById('nodelist').innerHTML = "here are the filter values: " + x +'<br>' + value//'<iframe seamless src="' + t + '"></iframe>';
+	//document.getElementById('nodelist').innerHTML = "here are the filter values: " + x +'<br>' + value//'<iframe seamless src="' + t + '"></iframe>';
 	//map.setFilter('buildings', [x])
 	
         //deleteMap();
@@ -535,7 +539,7 @@ map.on('mousemove', function(e) {
         if (rakennustyyppi.startsWith(',') || rakennustyyppi.startsWith(' ')) {
             rakennustyyppi = rakennustyyppi.substr(1);
         }
-        document.getElementById('nodelist').innerHTML += '<br><br>' + rakennustyyppi
+        //document.getElementById('nodelist').innerHTML += '<br><br>' + rakennustyyppi
         var t = sliderSet.get();
 	update(t);
         //var zoomi = googlemap.getZoom();
