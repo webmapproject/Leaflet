@@ -595,7 +595,48 @@ $("#slider").click(function (event) {
     }		
 	
 
-*/		
+*/	
+
+// Create a popup, but don't add it to the map yet.
+var popup = new mapboxgl.Popup({
+    closeButton: false
+});
+
+
+map.on('mousemove', function(e) {
+    map.featuresAt(e.point, {
+
+        // Collect each layer id we created into an array.
+        layer: layers.map(function(layer, i) {
+            return 'layer-' + i;
+        })
+    }, function(err, features) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = (!err && features.length) ? 'pointer' : '';
+
+        if (err || !features.length) {
+            popup.remove();
+            return;
+        }
+
+        var details = features[0].properties;
+
+        // Initialize a popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(e.lngLat)
+            .setHTML('<b>Year of construction: </b>' + details[facet] + 
+						'<br><b>Address: </b>' + details["Address"] + 
+						'<br><b>Type: </b>' + details["Intended_U"] +
+						'<br><b>Facade: </b>' + details["Facade"] +
+						'<br><b>Number of apartments: </b>' + details["Number_of"] +
+						'<br><b>ID: </b>' + details["building_c"])
+            .addTo(map);
+    });
+});
+
+
+
+
 		
 <!-- changing basemap -->	
 		var layerList = document.getElementById('sidebar');
