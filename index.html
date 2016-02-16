@@ -256,7 +256,7 @@
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'E Liikenteen rakennukset');" />Liikenteen rakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'F Hoitoalan rakennukset');" />Hoitoalan rakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'G Kokoontumisrakennukset');" />Kokoontumisrakennukset</li>
-                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes(this, '\ Opetusrakennukset');" />Opetusrakennukset</li>
+                        <li class="rakennustyyppiList"><input type="checkbox" onclick="handleBuildingtypes(this, 'Opetusrakennukset');" />Opetusrakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'J Teollisuusrakennukset');" />Teollisuusrakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'K Varastorakennukset');" />Varastorakennukset</li>
                         <li class="rakennustyyppiList"><input type="checkbox"  onclick="handleBuildingtypes(this, 'L Palo- ja pelastustoimen rakennukset');" />Palo- ja pelastustoimen rakennukset</li>
@@ -348,7 +348,7 @@
 		rakennustyyppi = $.trim(rakennustyyppi)
 		
 		var x = map.getFilter('buildings')
-		document.getElementById('nodelist').innerHTML = "here are the filter values: " +'<br>' + x +'<br>'
+		document.getElementById('nodelist').innerHTML = "here are the filter values: " +'<br>' + x +'<br>' + rakennustyyppi
 		
 		if (rakennustyyppi == "") {
 			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
@@ -524,7 +524,7 @@ map.on('mousemove', function(e) {
         rakennustyyppi = $.trim(rakennustyyppi)
         if (checkbox.checked) {
             if (rakennustyyppi != '') {
-                rakennustyyppi = rakennustyyppi + ', ' + value;
+                rakennustyyppi = rakennustyyppi + ',' + value;
             }
             else {
                 rakennustyyppi = rakennustyyppi + value;
@@ -532,7 +532,7 @@ map.on('mousemove', function(e) {
             }
         }
         else {
-            rakennustyyppi = rakennustyyppi.replace(', ' + value, value);
+            rakennustyyppi = rakennustyyppi.replace(',' + value, value);
             rakennustyyppi = rakennustyyppi.replace(value, '');
         }
 
