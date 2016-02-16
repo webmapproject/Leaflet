@@ -347,14 +347,16 @@
 		var c = parseFloat(ty[1])
 		rakennustyyppi = $.trim(rakennustyyppi)
 		
+		rakennustyyppi = rakennustyyppi.split("'")
 		var x = map.getFilter('buildings')
 		document.getElementById('nodelist').innerHTML = "here are the filter values: " +'<br>' + x +'<br>' + rakennustyyppi
+		
 		
 		if (rakennustyyppi == "") {
 			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
 		} else {
 			
-			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c], ["in","Intended_U", rakennustyyppi]])//'C Liikerakennukset', 'A Asuinrakennukset']])
+			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c], ["in","Intended_U", rakennustyyppi[0]]])//'C Liikerakennukset', 'A Asuinrakennukset']])
 		}
         };
 
