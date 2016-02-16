@@ -356,7 +356,7 @@
 			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
 		} else {
 			
-			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c], ["in","Intended_U", rakennustyyppi]])//'C Liikerakennukset', 'A Asuinrakennukset']])
+			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c], ["in","Intended_U", rakennustyyppi[0],rakennustyyppi[1]]])//'C Liikerakennukset', 'A Asuinrakennukset']])
 		}
         };
 
