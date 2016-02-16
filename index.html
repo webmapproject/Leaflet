@@ -506,8 +506,8 @@ map.on('mousemove', function(e) {
     function handleBuildingtypes(checkbox, value) {
 
 	var x = map.getFilter('buildings')
-	//document.getElementById('nodelist').innerHTML = "here are the filter values: " + x +'<br>' + value//'<iframe seamless src="' + t + '"></iframe>';
-	map.setFilter('buildings', [x])
+	document.getElementById('nodelist').innerHTML = "here are the filter values: " + x +'<br>' + value//'<iframe seamless src="' + t + '"></iframe>';
+	//map.setFilter('buildings', [x])
 	
         //deleteMap();
         //rakennustyyppi.trim();
@@ -529,7 +529,7 @@ map.on('mousemove', function(e) {
         if (rakennustyyppi.startsWith(',') || rakennustyyppi.startsWith(' ')) {
             rakennustyyppi = rakennustyyppi.substr(1);
         }
-        //document.getElementById('nodelist').innerHTML += '<br><br>' + rakennustyyppi
+        document.getElementById('nodelist').innerHTML += '<br><br>' + rakennustyyppi
         //var zoomi = googlemap.getZoom();
         //var centercoords = googlemap.getCenter();
         //updateDataLayer();
