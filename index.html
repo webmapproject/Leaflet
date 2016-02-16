@@ -506,7 +506,7 @@ map.on('mousemove', function(e) {
     function handleBuildingtypes(checkbox, value) {
 
 	var x = map.getFilter('buildings')
-	document.getElementById('nodelist').innerHTML = "here are the filter values: " + x//'<iframe seamless src="' + t + '"></iframe>';
+	document.getElementById('nodelist').innerHTML = "here are the filter values: " + x +'<br>' + value//'<iframe seamless src="' + t + '"></iframe>';
 	//map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
 	
         /*deleteMap();
