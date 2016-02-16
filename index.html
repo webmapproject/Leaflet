@@ -602,6 +602,9 @@ var popup = new mapboxgl.Popup({
     closeButton: false
 });
 
+// The key name that exists in each polygon properties
+// object we want to display
+var facet = 'Year_of_co';
 
 map.on('mousemove', function(e) {
     map.featuresAt(e.point, {
