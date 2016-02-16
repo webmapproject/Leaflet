@@ -513,11 +513,11 @@ map.on('mousemove', function(e) {
         //rakennustyyppi.trim();
         if (checkbox.checked) {
             if (rakennustyyppi != '') {
-                //rakennustyyppi = rakennustyyppi + ', ' + value;
-                rakennustyyppi = value;
+                rakennustyyppi = rakennustyyppi + ', ' + value;
             }
             else {
-                rakennustyyppi = rakennustyyppi + value;
+                //rakennustyyppi = rakennustyyppi + value;
+                rakennustyyppi = value;
             }
         }
         else {
