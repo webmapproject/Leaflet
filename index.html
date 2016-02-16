@@ -348,6 +348,9 @@
 		rakennustyyppi = $.trim(rakennustyyppi)
 		if (rakennustyyppi == "") {
 			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
+		} else {
+			
+			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c], ["in","Intended_U", rakennustyyppi]])
 		}
         };
 
@@ -533,6 +536,7 @@ map.on('mousemove', function(e) {
             rakennustyyppi = rakennustyyppi.substr(1);
         }
         document.getElementById('nodelist').innerHTML += '<br><br>' + rakennustyyppi
+        update();
         //var zoomi = googlemap.getZoom();
         //var centercoords = googlemap.getCenter();
         //updateDataLayer();
