@@ -317,11 +317,6 @@
 				'type': 'fill',
 				'source': 'buildings',
 				'filter': ["all", [">=","Year_of_co", 1700], ["<=","Year_of_co", 2013]],
-				
-				//'filter': ["all", [">=","Year_of_co", t[0]], ["<=","Year_of_co", t[1]]],
-//["==", "Year_of_co", 2000],
-//"Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1]// + " AND 'Käyttötarkoitus 1' IN (" + rakennustyyppi + ")"			
-
 				'paint': {
 					"fill-color": "#d44242"
 				},
@@ -332,158 +327,16 @@
 		
 		addLayer('Buildings', 'buildings');
 
-//		var featureLayer = L.mapbox.featureLayer().loadURL('mapbox://gabrielaadamczyk.dui0bi44').addTo(map)
-  //			.loadURL('mapbox://gabrielaadamczyk.dui0bi44')
-  //			.addTo(map)
- 			/*.setFilter(
-	    			function (feature) {
-	      				//$("input[type='checkbox']").click(function() {
-	        			if ($("#blue").prop("checked")) {
-	        				return (feature.properties["marker-color"] === "#3b5998");
-	        			} else {
-	          				return false;
-	        			}
-	      //});
-	    			}
-  			);*/
-
-
  	function update(tvar) {
 		var ty = tvar
 	//	document.getElementById('nodelist').innerHTML = "here are the ty values: " + ty[0] +", " + ty[1]//'<iframe seamless src="' + t + '"></iframe>';
 	//Here comes the setFilter-function... the upper shows just the sliders values in the sidebar
-		//setFilter("all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
-		//setFilter("buildings", [[">=","Year_of_co", 1700], ["<=","Year_of_co", 1950]])//layer.setFilter(function() { return false; })
 	//	var x = map.getFilter('buildings')//, 'filter')
 	//	document.getElementById('nodelist').innerHTML += x
 		var b = parseFloat(ty[0])
 		var c = parseFloat(ty[1])
 		map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
-		
-	//	map.buildings.setFilter(function (f) {
-	//		return f.properties['Year_of_co' ] >= ty[0] || f.properties['Year_of_co' ] <= ty[1]
-	//	});
-		//"all", [">=","Year_of_co", ty[0]], ["<=","Year_of_co", ty[1]])
         };
-        //return false;
-
-	//var t = sliderSet.get();
-
-
-
-
-/*       google.maps.visualRefresh = true;
-
-        var isMobile = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ||
-          (navigator.userAgent.match(/(iPod|iPhone|iPad|BlackBerry|Windows Phone|iemobile)/));
-
-        if (isMobile) {
-            var viewport = document.querySelector("meta[name=viewport]");
-            viewport.setAttribute('content', 'initial-scale=1.0, user-scalable=no');
-		}
-	 
-		var mapDiv = document.getElementById('map');
-        mapDiv.style.width = isMobile ? '100%' : '100%';
-        mapDiv.style.height = isMobile ? '100%' : '100%';
-        if (maptype != 'custom') {
-            mapOptions = {
-                center: centercoords,
-                zoom: currentView,
-                mapTypeId: maptype
-            };
-        }
-		
-		var mapp = new mapboxgl.Map(mapDiv, mapOptions);
-        map = map2;
-        //map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('googft-legend-open'));
-        //map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('googft-legend'));
-
-        map.setZoom(currentView);
-
-*/
-
-/*        layer = new google.maps.FusionTablesLayer({
-            map: map,
-            heatmap: { enabled: false },
-            query: {
-                select: "col21",
-                from: "1Cjp5kwTFW1zb7rCRILUg6PryPwo_9RkkM4kD960",
-                where: "Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1]// + " AND 'Käyttötarkoitus 1' IN (" + rakennustyyppi + ")"
-            },
-            options: {
-                styleId: 1,
-                templateId: 2
-            }
-        }); */
-
-//<!-- Adding layer -->
-	/*	layer = map.on('style.load', function () {
-			map.addSource('buildings', {
-				type: 'vector',
-				url: 'mapbox://gabrielaadamczyk.dui0bi44'
-			});
-			map.addLayer({
-				'id': 'buildings',
-				"interactive": true,
-				'type': 'fill',
-				'source': 'buildings',
-	//"Rakennusvuosi >= " + t[0] + " AND Rakennusvuosi <= " + t[1]// + " AND 'Käyttötarkoitus 1' IN (" + rakennustyyppi + ")"			
-				"filter": ["==", "Year_of_co", 2000],
-				'paint': {
-					"fill-color": "#d44242"
-				},
-				'source-layer': 'buildings'
-			});
-
-		});
-		
-		addLayer('Buildings', 'buildings');	*/
-		
-
-     /*   if (isMobile) {
-            var legend = document.getElementById('googft-legend');
-            var legendOpenButton = document.getElementById('googft-legend-open');
-            var legendCloseButton = document.getElementById('googft-legend-close');
-            legend.style.display = 'none';
-            legendOpenButton.style.display = 'block';
-            legendCloseButton.style.display = 'block';
-            legendOpenButton.onclick = function () {
-                legend.style.display = 'block';
-                legendOpenButton.style.display = 'none';
-            }
-            legendCloseButton.onclick = function () {
-                legend.style.display = 'none';
-                legendOpenButton.style.display = 'block';
-            }
-        }*/
-
-//	}	
-
-
-//        var slider = document.getElementById('slider');		
-	
-//		var t = slider.noUiSlider.get();
-		
-/*
-noUiSlider.create(slider, {
-    start: [1700.0, 2015.0],
-    behaviour: "drag",
-    connect: true,
-    range: {
-        min: 1700.0,
-        max: 2015.0
-    }
-});
-var a = 1
-var b = 2015
-
-$("#slider").click(function (event) {
-                var range = slider.noUiSlider.get();
-                var a = range.slice(0, 1);
-                var b = range.slice(1);
-});
-*/
-/*copy from the nouislider before layer*/
 
 	$(document).ready(function () {
         var slider = document.getElementById('slider');
@@ -520,10 +373,7 @@ $("#slider").click(function (event) {
                 };
              
             }
-	
-//	document.getElementById('nodelist').innerHTML = "vaihto" + t
-	
-            //update(zoomi, centercoords, mapType);
+
         });
 
         slider.noUiSlider.on('update', function () {
@@ -553,74 +403,7 @@ $("#slider").click(function (event) {
         setTopBoarderhover();
     }
 
-/*
-
-    	var slider = document.getElementById("slider");
-	
-	$(document).ready(function () {
-        var slider = document.getElementById('slider');
-
-        sliderSet = noUiSlider.create(slider, {
-            start: [1700, 2013], // Handle start position
-            //step: 10, // Slider moves in increments of '10'
-            margin: 1, // Handles must be more than '20' apart
-            connect: true, // Display a colored bar between the handles
-            direction: 'ltr', // Put '0' at the bottom of the slider
-            orientation: 'horizontal', // Orient the slider vertically
-            behaviour: 'tap-drag', // Move handle on tap, bar is draggable
-            range: { // Slider can select '0' to '100'
-                'min': 1700,
-                'max': 2013
-            },
-            pips: { // Show a scale with the slider
-                mode: 'steps',
-                density: 2
-            }
-        });
-
-
-        slider.noUiSlider.on('change', function () {
-            var zoomi = map.getZoom();
-            var centercoords = map.getCenter();
-
-            if (mapType == 'custom') {
-                mapOptions = {
-                    center: centercoords,
-                    zoom: zoomi,
-                    styles: mapstyles
-                };
-            }
-
-            //update(zoomi, centercoords, mapType);
-        });
-
-        slider.noUiSlider.on('update', function () {
-            setDownBoarderhover();
-            setTopBoarderhover();
-        });
-
-    });
-
-    function setDownBoarderhover() {
-        $('.noUi-handle-lower').children().remove('div');
-        var t = sliderSet.get();
-        $('.noUi-handle-lower').append('<div id="beginYear"><br/><br/><span id="beginSpan">' + Math.round(t[0]) + '</span></div>');
-    }
-    function setTopBoarderhover() {
-        $('.noUi-handle-upper').children().remove('div');
-        var t = sliderSet.get();
-        $('.noUi-handle-upper').append('<div id="endYear"><br/><br/><span id="endSpan">' + Math.round(t[1]) + '</span></div>');
-    }
-
-    function setBoarders() {
-        setDownBoarderhover();
-        setTopBoarderhover();
-    }		
-	
-
-*/	
-
-// Create a popup, but don't add it to the map yet.
+// Create a popup, but doesn't add it to the map yet.
 var popup = new mapboxgl.Popup({
     closeButton: false
 });
@@ -659,10 +442,6 @@ map.on('mousemove', function(e) {
             .addTo(map);
     });
 });
-
-
-
-
 		
 <!-- changing basemap -->	
 		var layerList = document.getElementById('sidebar');
@@ -678,11 +457,6 @@ map.on('mousemove', function(e) {
 
 	
 	
-
-
-
-
-
 
 <!--show and hide layer buildings unnecessary???-->		
 		function addLayer(name, id) {
