@@ -332,7 +332,7 @@ var popup = new mapboxgl.Popup({
 		
 		addLayer('Buildings', 'buildings');
  	
-	var heat = L.heatLayer('buildings', {maxZoom: 18}).addTo(map);
+	var heat = L.heatMap('buildings', {maxZoom: 18}).addTo(map);
     	var draw = true;
 
 	// add points on mouse move (except when interacting with the map)
