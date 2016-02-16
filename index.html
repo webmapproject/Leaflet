@@ -346,7 +346,7 @@
 		var b = parseFloat(ty[0])
 		var c = parseFloat(ty[1])
 		rakennustyyppi = $.trim(rakennustyyppi)
-		if rakennustyyppi == "" {
+		if (rakennustyyppi == "") {
 			map.setFilter('buildings', ["all", [">=","Year_of_co", b], ["<=","Year_of_co", c]])
 		}
         };
